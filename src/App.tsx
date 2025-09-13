@@ -5,6 +5,7 @@ import { Dashboard } from './pages/Dashboard';
 import { AdsAccount } from './pages/AdsAccount';
 import { CreateRules } from './pages/CreateRules';
 import { IronBank } from './pages/IronBank';
+import { Billing } from './pages/Billing';
 
 function App() {
   const navigate = useNavigate();
@@ -24,10 +25,11 @@ function App() {
         return 'Create Rules';
       case '/reports':
         return 'Reports';
-      case '/billing':
-        return 'Billing';
+
       case '/iron-bank':
         return 'Iron Bank';
+      case '/billing':
+        return 'Billing';
       case '/settings':
         return 'Settings';
       default:
@@ -36,7 +38,7 @@ function App() {
   };
 
   return (
-    <DashboardLayout 
+    <DashboardLayout
       title={getPageTitle(location.pathname)}
       currentPath={location.pathname}
       onNavigate={handleNavigate}
@@ -46,7 +48,7 @@ function App() {
         <Route path="/ads-account" element={<AdsAccount />} />
         <Route path="/create-rules" element={<CreateRules />} />
         <Route path="/reports" element={<div className="p-6">Reports Page - Coming Soon</div>} />
-        <Route path="/billing" element={<div className="p-6">Billing Page - Coming Soon</div>} />
+        <Route path="/billing" element={<Billing />} />
         <Route path="/iron-bank" element={<IronBank />} />
         <Route path="/settings" element={<div className="p-6">Settings Page - Coming Soon</div>} />
       </Routes>
