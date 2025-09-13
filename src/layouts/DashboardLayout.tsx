@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Sidebar } from '../components/dashboard/Sidebar';
 import { Header } from '../components/dashboard/Header';
 
@@ -16,13 +16,13 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
   onNavigate 
 }) => {
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="h-screen bg-gray-50">
       {/* Sidebar */}
       <Sidebar onNavigate={onNavigate} currentPath={currentPath} />
       
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <Header title={title} />
+      <div className="ml-16 h-full flex flex-col">
+        <Header title={title} withSidebar={false} />
         <main className="flex-1 overflow-auto">
           {children}
         </main>

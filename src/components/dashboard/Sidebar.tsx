@@ -69,7 +69,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onNavigate, currentPath }) => 
   ];
 
   return (
-    <div className="w-16 bg-white border-r border-gray-200 min-h-screen">
+    <div className="fixed left-0 top-0 w-16 bg-white border-r border-gray-200 h-full z-10">
       {/* Logo */}
       <div className="p-3 border-b border-gray-200">
         <div className="flex justify-center">
