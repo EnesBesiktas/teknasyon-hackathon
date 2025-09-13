@@ -28,11 +28,6 @@ export const CreateRules: React.FC = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-6 py-4">
-        <h1 className="text-2xl font-bold text-gray-900">Create Rules</h1>
-      </div>
-
       <div className="p-6">
         <div className="max-w-4xl mx-auto">
           {/* Ad Account Selector */}
