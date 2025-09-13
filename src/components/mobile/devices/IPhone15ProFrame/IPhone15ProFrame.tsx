@@ -8,28 +8,28 @@ const StatusBar: React.FC<StatusBarProps> = ({
   wifiSignal,
   cellularSignal: _cellularSignal, // unused as per requirements
 }) => (
-  <div className="flex justify-between items-center px-4 py-2 text-white text-sm font-medium">
+  <div className="flex justify-between items-center px-3 py-1.5 text-white text-xs font-medium">
     <div className="flex items-center">
-      <span className="font-semibold">{time}</span>
+      <span className="font-semibold text-sm">{time}</span>
     </div>
 
     <div className="flex items-center space-x-1">
       {/* WiFi Icon */}
       {wifiSignal && (
-        <Wifi className="h-3.5 w-3.5" />
+        <Wifi className="h-3 w-3" />
       )}
 
       {/* Battery with percentage */}
       <div className="flex items-center space-x-0.5">
-        <span className="text-xs font-medium">{batteryLevel}%</span>
+        <span className="text-xs font-medium">{batteryLevel}</span>
         <div className="relative">
-          <div className="w-5 h-2.5 border border-white rounded-sm">
+          <div className="w-4 h-2 border border-white rounded-sm">
             <div
               className="h-full bg-green-500 rounded-sm transition-all duration-300"
               style={{ width: `${batteryLevel}%` }}
             />
           </div>
-          <div className="absolute -right-0.5 top-0.5 w-0.5 h-1.5 bg-white rounded-r-sm" />
+          <div className="absolute -right-0.5 top-0.5 w-0.5 h-1 bg-white rounded-r-sm" />
         </div>
       </div>
     </div>
@@ -53,8 +53,8 @@ export const IPhone15ProFrame: React.FC<IPhone15ProFrameProps> = ({
 }) => {
   return (
     <div className={`relative mx-auto ${className}`}>
-      {/* iPhone 15 Pro Frame - More responsive sizing */}
-      <div className="relative w-72 max-w-[90vw] h-[600px] max-h-[85vh] bg-black rounded-[3rem] shadow-2xl border-4 border-gray-800 overflow-hidden">
+      {/* iPhone 16 Pro Max Frame - Larger screen with proper proportions */}
+      <div className="relative w-80 max-w-[90vw] h-[700px] max-h-[90vh] bg-black rounded-[3.5rem] shadow-2xl border-4 border-gray-800 overflow-hidden">
         {/* Dynamic Island */}
         <DynamicIsland />
 
@@ -82,14 +82,14 @@ export const IPhone15ProFrame: React.FC<IPhone15ProFrameProps> = ({
 
         {/* Side Buttons */}
         {/* Volume Buttons */}
-        <div className="absolute left-0 top-20 w-1 h-8 bg-gray-700 rounded-r-sm" />
-        <div className="absolute left-0 top-32 w-1 h-8 bg-gray-700 rounded-r-sm" />
+        <div className="absolute left-0 top-24 w-1 h-10 bg-gray-700 rounded-r-sm" />
+        <div className="absolute left-0 top-36 w-1 h-10 bg-gray-700 rounded-r-sm" />
 
         {/* Power Button */}
-        <div className="absolute right-0 top-24 w-1 h-12 bg-gray-700 rounded-l-sm" />
+        <div className="absolute right-0 top-28 w-1 h-14 bg-gray-700 rounded-l-sm" />
 
         {/* Action Button */}
-        <div className="absolute left-0 top-44 w-1 h-6 bg-gray-700 rounded-r-sm" />
+        <div className="absolute left-0 top-52 w-1 h-8 bg-gray-700 rounded-r-sm" />
       </div>
     </div>
   );
