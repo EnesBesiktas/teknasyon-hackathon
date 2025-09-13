@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 
 import { DragonIcon } from '../components/ui/DragonIcon';
 import { VideoUploadForm } from '../components/iron-bank/VideoUploadForm';
@@ -22,6 +22,14 @@ export const IronBank: React.FC = () => {
 
   const updateState = useCallback((updates: Partial<IronBankState>) => {
     setState(prev => ({ ...prev, ...updates }));
+  }, []);
+
+  // Add Iron Bank class to body when component mounts
+  useEffect(() => {
+    document.body.classList.add('iron-bank-page');
+    return () => {
+      document.body.classList.remove('iron-bank-page');
+    };
   }, []);
 
   const handleVideoUpload = useCallback(async (file: File, countries: Country[]) => {
@@ -112,7 +120,7 @@ export const IronBank: React.FC = () => {
   };
 
   return (
-    <div className="bg-black min-h-screen relative overflow-hidden dragon-fire-bg">
+    <div className="bg-black min-h-screen relative overflow-hidden dragon-fire-bg iron-bank-page">
       <div className="p-4 relative z-10">
         <div className="w-full">
           {/* Header */}

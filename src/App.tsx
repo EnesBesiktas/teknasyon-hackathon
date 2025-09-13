@@ -40,6 +40,7 @@ function App() {
       title={getPageTitle(location.pathname)}
       currentPath={location.pathname}
       onNavigate={handleNavigate}
+      isIronBank={location.pathname === '/iron-bank'}
     >
       <Routes>
         <Route path="/" element={<Dashboard />} />

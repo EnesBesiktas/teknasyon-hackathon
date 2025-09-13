@@ -69,7 +69,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onNavigate, currentPath }) => 
   ];
 
   return (
-    <div className="fixed left-0 top-0 w-16 bg-white border-r border-gray-200 h-full z-10">
+    <div className="fixed left-0 top-0 w-16 bg-white border-r border-gray-200 h-full z-10 sidebar">
       {/* Logo */}
       <div className="p-3 border-b border-gray-200">
         <div className="flex justify-center">
@@ -86,9 +86,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ onNavigate, currentPath }) => 
               onClick={() => onNavigate(item.path)}
               title={item.label}
               className={`
-                w-full h-10 flex items-center justify-center rounded-lg transition-colors group relative
+                w-full h-10 flex items-center justify-center rounded-lg transition-colors group relative nav-item
                 ${item.isActive 
-                  ? 'bg-blue-50 text-blue-700' 
+                  ? 'bg-blue-50 text-blue-700 active' 
                   : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                 }
               `}

@@ -7,16 +7,18 @@ interface DashboardLayoutProps {
   title: string;
   currentPath: string;
   onNavigate: (path: string) => void;
+  isIronBank?: boolean;
 }
 
 export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ 
   children, 
   title, 
   currentPath, 
-  onNavigate 
+  onNavigate,
+  isIronBank = false
 }) => {
   return (
-    <div className="h-screen bg-gray-50">
+    <div className={`h-screen ${isIronBank ? 'bg-black' : 'bg-gray-50'}`}>
       {/* Sidebar */}
       <Sidebar onNavigate={onNavigate} currentPath={currentPath} />
       

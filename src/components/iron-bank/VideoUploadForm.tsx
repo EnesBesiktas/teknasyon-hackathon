@@ -325,7 +325,7 @@ export const VideoUploadForm: React.FC<VideoUploadFormProps> = ({
             {isLoading ? (
               <div className="flex items-center gap-3">
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                Feth Ediliyor...
+                Fethediliyor...
               </div>
             ) : (
               'Fethet'

@@ -8,13 +8,13 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ title, withSidebar = false }) => {
   return (
-    <header className={`bg-white border-b border-gray-200 px-4 py-2.5 ${withSidebar ? 'ml-16' : ''}`}>
+    <header className={`bg-white border-b border-gray-200 px-4 py-2.5 header ${withSidebar ? 'ml-16' : ''}`}>
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <h1 className="text-xl font-bold text-gray-900">{title}</h1>
+          <h1 className="text-xl font-bold text-gray-900 header-title">{title}</h1>
         </div>
         
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-3 header-actions">
           {/* Notification Icon */}
           <button className="p-1.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
             <Bell className="w-4 h-4" />

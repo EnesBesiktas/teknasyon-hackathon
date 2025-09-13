@@ -188,3 +188,149 @@
                 0 0 35px rgba(255, 69, 0, 0.3);
   }
 }
+
+/* Iron Bank Page Specific Styles */
+.iron-bank-page .sidebar {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 20, 20, 0.95) 100%) !important;
+  border-right: 2px solid rgba(255, 140, 0, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.iron-bank-page .sidebar .nav-item {
+  color: rgba(255, 255, 255, 0.8) !important;
+  transition: all 0.3s ease !important;
+}
+
+.iron-bank-page .sidebar .nav-item:hover {
+  color: rgba(255, 140, 0, 1) !important;
+  background: rgba(255, 140, 0, 0.1) !important;
+  border-radius: 8px !important;
+}
+
+.iron-bank-page .sidebar .nav-item.active {
+  color: rgba(255, 140, 0, 1) !important;
+  background: linear-gradient(135deg, rgba(255, 140, 0, 0.2) 0%, rgba(255, 69, 0, 0.1) 100%) !important;
+  border-radius: 8px !important;
+  border-left: 3px solid rgba(255, 140, 0, 0.8) !important;
+}
+
+.iron-bank-page .header {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(20, 20, 20, 0.9) 100%) !important;
+  border-bottom: 2px solid rgba(255, 140, 0, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.iron-bank-page .header .header-title {
+  color: rgba(255, 255, 255, 0.9) !important;
+  text-shadow: 0 0 10px rgba(255, 140, 0, 0.3) !important;
+}
+
+.iron-bank-page .header .header-subtitle {
+  color: rgba(255, 140, 0, 0.8) !important;
+}
+
+.iron-bank-page .header .header-icon {
+  color: rgba(255, 140, 0, 0.8) !important;
+}
+
+.iron-bank-page .header .header-actions button {
+  color: rgba(255, 255, 255, 0.7) !important;
+  transition: all 0.3s ease !important;
+}
+
+.iron-bank-page .header .header-actions button:hover {
+  color: rgba(255, 140, 0, 1) !important;
+  background: rgba(255, 140, 0, 0.1) !important;
+}
+
+/* More specific selectors for Iron Bank theming */
+body.iron-bank-page .sidebar {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 20, 20, 0.95) 100%) !important;
+  border-right: 2px solid rgba(255, 140, 0, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+body.iron-bank-page .sidebar .nav-item {
+  color: rgba(255, 255, 255, 0.8) !important;
+  transition: all 0.3s ease !important;
+}
+
+body.iron-bank-page .sidebar .nav-item:hover {
+  color: rgba(255, 140, 0, 1) !important;
+  background: rgba(255, 140, 0, 0.1) !important;
+  border-radius: 8px !important;
+}
+
+body.iron-bank-page .sidebar .nav-item.active {
+  color: rgba(255, 140, 0, 1) !important;
+  background: linear-gradient(135deg, rgba(255, 140, 0, 0.2) 0%, rgba(255, 69, 0, 0.1) 100%) !important;
+  border-radius: 8px !important;
+  border-left: 3px solid rgba(255, 140, 0, 0.8) !important;
+}
+
+body.iron-bank-page .header {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(20, 20, 20, 0.9) 100%) !important;
+  border-bottom: 2px solid rgba(255, 140, 0, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+body.iron-bank-page .header .header-title {
+  color: rgba(255, 255, 255, 0.9) !important;
+  text-shadow: 0 0 10px rgba(255, 140, 0, 0.3) !important;
+}
+
+body.iron-bank-page .header .header-actions button {
+  color: rgba(255, 255, 255, 0.7) !important;
+  transition: all 0.3s ease !important;
+}
+
+body.iron-bank-page .header .header-actions button:hover {
+  color: rgba(255, 140, 0, 1) !important;
+  background: rgba(255, 140, 0, 0.1) !important;
+}
+
+/* Direct targeting for Iron Bank theming */
+.iron-bank-page .fixed.left-0.top-0.w-16 {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 20, 20, 0.95) 100%) !important;
+  border-right: 2px solid rgba(255, 140, 0, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.iron-bank-page .fixed.left-0.top-0.w-16 .nav-item {
+  color: rgba(255, 255, 255, 0.8) !important;
+  transition: all 0.3s ease !important;
+}
+
+.iron-bank-page .fixed.left-0.top-0.w-16 .nav-item:hover {
+  color: rgba(255, 140, 0, 1) !important;
+  background: rgba(255, 140, 0, 0.1) !important;
+  border-radius: 8px !important;
+}
+
+.iron-bank-page .fixed.left-0.top-0.w-16 .nav-item.active {
+  color: rgba(255, 140, 0, 1) !important;
+  background: linear-gradient(135deg, rgba(255, 140, 0, 0.2) 0%, rgba(255, 69, 0, 0.1) 100%) !important;
+  border-radius: 8px !important;
+  border-left: 3px solid rgba(255, 140, 0, 0.8) !important;
+}
+
+.iron-bank-page .bg-white.border-b.border-gray-200 {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(20, 20, 20, 0.9) 100%) !important;
+  border-bottom: 2px solid rgba(255, 140, 0, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.iron-bank-page .bg-white.border-b.border-gray-200 .header-title {
+  color: rgba(255, 255, 255, 0.9) !important;
+  text-shadow: 0 0 10px rgba(255, 140, 0, 0.3) !important;
+}
+
+.iron-bank-page .bg-white.border-b.border-gray-200 .header-actions button {
+  color: rgba(255, 255, 255, 0.7) !important;
+  transition: all 0.3s ease !important;
+}
+
+.iron-bank-page .bg-white.border-b.border-gray-200 .header-actions button:hover {
+  color: rgba(255, 140, 0, 1) !important;
+  background: rgba(255, 140, 0, 0.1) !important;
+}
