@@ -59,31 +59,35 @@ export const VideoUploadForm: React.FC<VideoUploadFormProps> = ({
   const localizationApi = useRef(new LocalizationApi(storage));
 
   useEffect(() => {
-    const fetchCountries = async () => {
-      try {
-        const countries = await localizationApi.current.getCountries(false);
+    // Backend bağlantısı geçici olarak deaktif edildi - geliştirme için
+    // const fetchCountries = async () => {
+    //   try {
+    //     const countries = await localizationApi.current.getCountries(false);
 
-        // Map backend countries to frontend format, keeping original order but using backend data
-        const mappedCountries = AVAILABLE_COUNTRIES.map(frontendCountry => {
-          const backendCountry = countries.find(bc => bc.country_code === frontendCountry.code);
-          if (backendCountry) {
-            return {
-              ...frontendCountry,
-              name: backendCountry.country_name,
-              language: backendCountry.language_name,
-            };
-          }
-          return frontendCountry;
-        });
+    //     // Map backend countries to frontend format, keeping original order but using backend data
+    //     const mappedCountries = AVAILABLE_COUNTRIES.map(frontendCountry => {
+    //       const backendCountry = countries.find(bc => bc.country_code === frontendCountry.code);
+    //       if (backendCountry) {
+    //         return {
+    //           ...frontendCountry,
+    //           name: backendCountry.country_name,
+    //           language: backendCountry.language_name,
+    //         };
+    //       }
+    //       return frontendCountry;
+    //     });
 
-        setAvailableCountries(mappedCountries);
-      } catch (error) {
-        console.warn('Failed to fetch countries from backend, using fallback list');
-        // Keep using AVAILABLE_COUNTRIES as fallback
-      }
-    };
+    //     setAvailableCountries(mappedCountries);
+    //   } catch (error) {
+    //     console.warn('Failed to fetch countries from backend, using fallback list');
+    //     // Keep using AVAILABLE_COUNTRIES as fallback
+    //   }
+    // };
 
-    fetchCountries();
+    // fetchCountries();
+    
+    // Şimdilik sadece frontend verilerini kullan
+    setAvailableCountries(AVAILABLE_COUNTRIES);
   }, []); // ✅ Empty dependency array - runs only once on mount
 
   const handleFileSelect = (file: File) => {
@@ -223,19 +227,19 @@ export const VideoUploadForm: React.FC<VideoUploadFormProps> = ({
         <div className="mb-8">
           <div
             className={`
-              cursor-pointer
+              ${selectedFile ? 'cursor-default' : 'cursor-pointer'}
               relative border-2 border-dashed rounded-lg p-8 text-center transition-all duration-200
               ${isDragOver
                 ? 'border-orange-400 bg-gradient-to-br from-orange-900/30 to-red-900/30 backdrop-blur-sm'
                 : selectedFile
-                  ? 'border-orange-400 bg-gradient-to-br from-orange-900/20 to-red-900/20 backdrop-blur-sm'
+                  ? 'border-green-400 bg-gradient-to-br from-green-900/20 to-emerald-900/20 backdrop-blur-sm'
                   : 'border-gray-600 hover:border-orange-400 hover:bg-gradient-to-br hover:from-orange-900/10 hover:to-red-900/10 hover:backdrop-blur-sm'
               }
             `}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-            onClick={() => fileInputRef.current?.click()}
+            onDragOver={selectedFile ? undefined : handleDragOver}
+            onDragLeave={selectedFile ? undefined : handleDragLeave}
+            onDrop={selectedFile ? undefined : handleDrop}
+            onClick={selectedFile ? undefined : () => fileInputRef.current?.click()}
           >
             <input
               ref={fileInputRef}
@@ -247,36 +251,32 @@ export const VideoUploadForm: React.FC<VideoUploadFormProps> = ({
 
             {selectedFile ? (
               <div className="space-y-6 relative">
-                {/* Dragon Fire Video Frame */}
-                <div className="relative mx-auto w-24 h-24 rounded-full bg-gradient-to-r from-orange-500 via-red-500 to-orange-600 p-1 flame-pulse">
+                {/* Success Video Frame */}
+                <div className="relative mx-auto w-24 h-24 rounded-full bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 p-1 animate-pulse">
                   <div className="w-full h-full rounded-full bg-black flex items-center justify-center">
-                    <Film className="w-10 h-10 text-orange-400" />
+                    <Film className="w-10 h-10 text-green-400" />
                   </div>
                 </div>
                 
                 {/* Epic Success Message */}
                 <div className="text-center">
-                  <p className="text-xl font-bold text-orange-400 drop-shadow-lg mb-2">
-                     VIDEO HAZIR! 
-                  </p>
+                  <div className="flex items-center justify-center mb-3">
+                    <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mr-3">
+                      <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <p className="text-xl font-bold text-green-400 drop-shadow-lg">
+                       VIDEO HAZIR! 
+                    </p>
+                  </div>
                   <p className="text-white font-semibold drop-shadow-lg">
                     <strong>{selectedFile.name}</strong>
                   </p>
-                  <p className="text-orange-200 text-sm mt-1">
+                  <p className="text-green-200 text-sm mt-1">
                     {formatFileSize(selectedFile.size)} • Conquest Ready
                   </p>
                 </div>
-                
-                {/* Epic Change Button */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedFile(null);
-                  }}
-                  className="hover-flames bg-gradient-to-r from-purple-600 to-purple-700 text-white px-6 py-2 rounded-lg font-medium hover:from-purple-700 hover:to-purple-800 transition-all duration-200 shadow-lg mx-auto block"
-                >
-                  ⚔️ Başka Video Seç
-                </button>
               </div>
             ) : (
               <div className="space-y-4">
@@ -323,9 +323,9 @@ export const VideoUploadForm: React.FC<VideoUploadFormProps> = ({
               const isDE = country.code === 'DE';
               const isES = country.code === 'ES';
               const isIT = country.code === 'IT';
-              const isBR = country.code === 'BR';
+              const isKP = country.code === 'KP';
               const isCN = country.code === 'CN';
-              const hasSpecialBackground = isTurkey || isUS || isDE || isES || isIT || isBR || isCN;
+              const hasSpecialBackground = isTurkey || isUS || isDE || isES || isIT || isKP || isCN;
               
               let backgroundStyle = {};
               if (isTurkey) {
@@ -363,7 +363,7 @@ export const VideoUploadForm: React.FC<VideoUploadFormProps> = ({
                   backgroundPosition: 'center',
                   backgroundRepeat: 'no-repeat'
                 };
-              } else if (isBR) {
+              } else if (isKP) {
                 backgroundStyle = {
                   backgroundImage: `url(${gardenerLogo})`,
                   backgroundSize: 'cover',
@@ -525,12 +525,16 @@ export const VideoUploadForm: React.FC<VideoUploadFormProps> = ({
             onClick={handleSubmit}
             disabled={!selectedFile || selectedCountries.length === 0 || isLoading || isEpicAnimationActive}
             className={`
-              hover-flames px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-200 relative overflow-hidden
+              hover-flames px-8 py-4 text-lg font-bold rounded-lg transition-all duration-200 relative overflow-hidden
               ${!selectedFile || selectedCountries.length === 0 || isLoading || isEpicAnimationActive
                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'bg-gradient-to-r from-purple-600 to-purple-700 text-white hover:from-purple-700 hover:to-purple-800 shadow-lg hover:shadow-xl transform hover:scale-105'
+                : 'bg-gradient-to-r from-purple-600 to-purple-700 text-white hover:from-purple-700 hover:to-purple-800 shadow-lg hover:shadow-xl transform hover:scale-105 border border-orange-500/50 hover:border-orange-400/70'
               }
             `}
+            style={{
+              color: !selectedFile || selectedCountries.length === 0 || isLoading || isEpicAnimationActive ? undefined : 'white !important',
+              textShadow: !selectedFile || selectedCountries.length === 0 || isLoading || isEpicAnimationActive ? undefined : '2px 2px 4px rgba(0,0,0,0.8) !important'
+            }}
           >
             {isEpicAnimationActive ? (
               <div className="flex items-center gap-3">
@@ -546,26 +550,24 @@ export const VideoUploadForm: React.FC<VideoUploadFormProps> = ({
                 Fethediliyor...
               </div>
             ) : (
-              <span className="flex items-center gap-2">
-                <span>Fethet</span>
-                <span className="text-2xl animate-bounce">⚔️</span>
+              <span className="flex items-center gap-2 text-white font-bold drop-shadow-lg relative z-10">
+                <span className="text-white font-bold opacity-100 !text-white !font-bold" style={{ color: 'white !important', opacity: '1 !important' }}>Fethet</span>
+                <span className="text-2xl animate-bounce text-white !text-white" style={{ color: 'white !important' }}>⚔️</span>
               </span>
             )}
 
-            {/* Epic Button Effects */}
+            {/* Dragon Fire Button Effects */}
             {!isEpicAnimationActive && !isLoading && selectedFile && selectedCountries.length > 0 && (
               <>
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-lg animate-pulse"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-500/30 to-red-500/30 rounded-lg animate-pulse"></div>
                 <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-purple-700 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-600/10 to-red-600/10 rounded-lg animate-pulse"></div>
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-60 animate-pulse"></div>
+                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-red-500 to-transparent opacity-60 animate-pulse"></div>
               </>
             )}
           </Button>
 
-          {selectedFile && selectedCountries.length > 0 && !isEpicAnimationActive && (
-            <p className="text-orange-200 text-sm mt-4 drop-shadow-lg animate-pulse">
-              <span className="text-orange-400 font-bold">🐉</span> Video {selectedCountries[0].name} için fethedilecek <span className="text-orange-400 font-bold">🔥</span>
-            </p>
-          )}
         </div>
       </div>
     </div>

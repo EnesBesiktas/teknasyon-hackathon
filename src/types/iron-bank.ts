@@ -66,6 +66,6 @@ export const AVAILABLE_COUNTRIES: Country[] = [
   { code: 'DE', name: 'Germany', flag: '🇩🇪', language: 'German' },
   { code: 'ES', name: 'Spain', flag: '🇪🇸', language: 'Spanish' },
   { code: 'IT', name: 'Italy', flag: '🇮🇹', language: 'Italian' },
-  { code: 'BR', name: 'Brazil', flag: '🇧🇷', language: 'Portuguese' },
+  { code: 'KP', name: 'North Korea', flag: '🇰🇵', language: 'Korean' },
   { code: 'CN', name: 'China', flag: '🇨🇳', language: 'Chinese' },
 ];

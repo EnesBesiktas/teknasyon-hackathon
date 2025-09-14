@@ -198,9 +198,18 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                     <p className="text-sm text-orange-200">{campaigns.length} kampanya hazır</p>
                   </div>
                 </div>
-                <Button className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white border border-green-500 rounded-lg hover:bg-green-700">
-                  <Download className="w-4 h-4" />
-                  Tümünü İndir
+                <Button className="flex items-center gap-2 px-4 py-2 bg-black/60 text-white border border-orange-500/50 rounded-lg hover:bg-orange-500/10 hover:border-orange-400 hover-flames relative overflow-hidden" style={{ color: 'white !important', textShadow: '2px 2px 4px rgba(0,0,0,0.8) !important' }}>
+                  <div className="relative z-20 flex items-center gap-2">
+                    <Download className="w-4 h-4" />
+                    <span className="text-white font-bold drop-shadow-lg">Tümünü İndir</span>
+                  </div>
+                  
+                  {/* Dragon Fire Effects - Behind text */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-red-500/5 rounded-lg animate-pulse"></div>
+                  <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg blur opacity-20 group-hover:opacity-30 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-orange-500/2 to-red-500/2 rounded-lg animate-pulse"></div>
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-20 animate-pulse"></div>
+                  <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-red-500 to-transparent opacity-20 animate-pulse"></div>
                 </Button>
               </div>
 
@@ -218,12 +227,25 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                       <div className="flex items-center gap-2">
                         <Button
                           onClick={() => copyToClipboard(campaign.adText)}
-                          className="p-1 hover:bg-white/20 rounded text-gray-300 hover:text-white"
+                          className="p-1 hover:bg-orange-500/10 rounded text-gray-300 hover:text-orange-200 hover-flames relative overflow-hidden"
+                          style={{ color: 'inherit !important' }}
                         >
-                          <Copy className="w-4 h-4" />
+                          <div className="relative z-20">
+                            <Copy className="w-4 h-4" />
+                          </div>
+                          
+                          {/* Dragon Fire Effects - Behind icon */}
+                          <div className="absolute inset-0 bg-gradient-to-r from-orange-500/3 to-red-500/3 rounded animate-pulse"></div>
+                          <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-red-500 rounded blur opacity-10 group-hover:opacity-20 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
                         </Button>
-                        <Button className="p-1 hover:bg-white/20 rounded text-gray-300 hover:text-white">
-                          <Edit className="w-4 h-4" />
+                        <Button className="p-1 hover:bg-orange-500/10 rounded text-gray-300 hover:text-orange-200 hover-flames relative overflow-hidden" style={{ color: 'inherit !important' }}>
+                          <div className="relative z-20">
+                            <Edit className="w-4 h-4" />
+                          </div>
+                          
+                          {/* Dragon Fire Effects - Behind icon */}
+                          <div className="absolute inset-0 bg-gradient-to-r from-orange-500/3 to-red-500/3 rounded animate-pulse"></div>
+                          <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-red-500 rounded blur opacity-10 group-hover:opacity-20 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
                         </Button>
                       </div>
                     </div>
@@ -272,17 +294,44 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
 
                     {/* Action Buttons */}
                     <div className="flex items-center gap-3 mt-4 pt-4 border-t border-gray-600/30">
-                      <Button className="flex items-center gap-2 px-3 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
-                        <Eye className="w-4 h-4" />
-                        Önizle
+                      <Button className="flex items-center gap-2 px-3 py-2 bg-black/60 text-white border border-orange-500/50 rounded-lg hover:bg-orange-500/10 hover:border-orange-400 hover-flames relative overflow-hidden" style={{ color: 'white !important', textShadow: '2px 2px 4px rgba(0,0,0,0.8) !important' }}>
+                        <div className="relative z-20 flex items-center gap-2">
+                          <Eye className="w-4 h-4" />
+                          <span className="text-white font-bold drop-shadow-lg">Önizle</span>
+                        </div>
+                        
+                        {/* Dragon Fire Effects - Behind text */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-red-500/5 rounded-lg animate-pulse"></div>
+                        <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg blur opacity-20 group-hover:opacity-30 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/2 to-red-500/2 rounded-lg animate-pulse"></div>
+                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-20 animate-pulse"></div>
+                        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-red-500 to-transparent opacity-20 animate-pulse"></div>
                       </Button>
-                      <Button className="flex items-center gap-2 px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-                        <Target className="w-4 h-4" />
-                        Kampanyayı Başlat
+                      <Button className="flex items-center gap-2 px-3 py-2 bg-black/60 text-white border border-orange-500/50 rounded-lg hover:bg-orange-500/10 hover:border-orange-400 hover-flames relative overflow-hidden" style={{ color: 'white !important', textShadow: '2px 2px 4px rgba(0,0,0,0.8) !important' }}>
+                        <div className="relative z-20 flex items-center gap-2">
+                          <Target className="w-4 h-4" />
+                          <span className="text-white font-bold drop-shadow-lg">Kampanyayı Başlat</span>
+                        </div>
+                        
+                        {/* Dragon Fire Effects - Behind text */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-red-500/5 rounded-lg animate-pulse"></div>
+                        <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg blur opacity-20 group-hover:opacity-30 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/2 to-red-500/2 rounded-lg animate-pulse"></div>
+                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-20 animate-pulse"></div>
+                        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-red-500 to-transparent opacity-20 animate-pulse"></div>
                       </Button>
-                      <Button className="flex items-center gap-2 px-3 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50">
-                        <Download className="w-4 h-4" />
-                        İndir
+                      <Button className="flex items-center gap-2 px-3 py-2 bg-black/60 text-orange-200 border border-orange-500/50 rounded-lg hover:bg-orange-500/10 hover:border-orange-400 hover-flames relative overflow-hidden" style={{ color: 'rgb(251 146 60) !important', textShadow: '2px 2px 4px rgba(0,0,0,0.8) !important' }}>
+                        <div className="relative z-20 flex items-center gap-2">
+                          <Download className="w-4 h-4" />
+                          <span className="text-orange-200 font-bold drop-shadow-lg">İndir</span>
+                        </div>
+                        
+                        {/* Dragon Fire Effects - Behind text */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-red-500/5 rounded-lg animate-pulse"></div>
+                        <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg blur opacity-20 group-hover:opacity-30 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/2 to-red-500/2 rounded-lg animate-pulse"></div>
+                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-20 animate-pulse"></div>
+                        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-red-500 to-transparent opacity-20 animate-pulse"></div>
                       </Button>
                     </div>
                   </div>

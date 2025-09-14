@@ -51,42 +51,78 @@ export const IronBank: React.FC = () => {
     });
 
     try {
+      // Backend bağlantısı geçici olarak deaktif edildi - geliştirme için
       // Step 1: Upload video to backend
-      console.log('Uploading video to backend...');
-      const uploadResponse = await videoApi.uploadVideo(file, 'Iron Bank video upload');
-      const videoId = uploadResponse.video.id;
+      // console.log('Uploading video to backend...');
+      // const uploadResponse = await videoApi.uploadVideo(file, 'Iron Bank video upload');
+      // const videoId = uploadResponse.video.id;
+      // setUploadedVideoId(videoId);
+
+      // Simulated video ID for development
+      const videoId = Math.floor(Math.random() * 1000000);
       setUploadedVideoId(videoId);
 
-      console.log('Video uploaded successfully, ID:', videoId);
+      console.log('Simulated video upload, ID:', videoId);
 
       // Step 2: Start transcription process
-      console.log('Starting transcription...');
-      await videoApi.transcribeVideo(videoId);
+      // console.log('Starting transcription...');
+      // await videoApi.transcribeVideo(videoId);
+
+      console.log('Simulated transcription completed');
 
       // Step 3: Direct localization for the first selected country (no polling!)
       const firstCountry = countries[0];
-      console.log('Starting DIRECT localization for:', firstCountry.code);
+      console.log('Starting SIMULATED localization for:', firstCountry.code);
 
+      // Backend bağlantısı geçici olarak deaktif edildi - geliştirme için
       // Use direct localization API - this processes everything immediately
-      const localizationResult = await localizationApi.directLocalize({
-        video_id: videoId,
-        country_code: firstCountry.code,
-        use_local_tts: false,
-        music_only_background: true
-      });
+      // const localizationResult = await localizationApi.directLocalize({
+      //   video_id: videoId,
+      //   country_code: firstCountry.code,
+      //   use_local_tts: false,
+      //   music_only_background: true
+      // });
 
-      console.log('Direct localization completed:', localizationResult);
+      // Simulated localization result for development
+      const localizationResult = {
+        status: 'completed',
+        final_video_url: `https://example.com/localized_${firstCountry.code}.mp4`,
+        country_code: firstCountry.code,
+        video_id: videoId
+      };
+
+      console.log('Simulated localization completed:', localizationResult);
 
       // Store localization result
       setLocalizationResult(localizationResult);
 
       // Step 4: Run cultural analysis for the first selected country
-      console.log('Running cultural analysis for:', firstCountry.code);
+      console.log('Running SIMULATED cultural analysis for:', firstCountry.code);
 
-      const analysisResponse = await localizationApi.analyzeCulture({
-        video_id: videoId,
-        country_codes: [firstCountry.code]
-      });
+      // Simulated analysis response for development
+      const analysisResponse = {
+        results: [{
+          scores: {
+            cultural_fit_percent: 85,
+            content_suitability_percent: 92,
+            market_potential_percent: 78
+          },
+          strengths: [
+            'Güçlü görsel hikaye anlatımı',
+            'Evrensel duygusal bağlantı',
+            'Yüksek üretim kalitesi'
+          ],
+          weaknesses: [
+            'Yerel kültürel referanslar eksik',
+            'Dil uyarlaması gerekli'
+          ],
+          recommendations: [
+            'Yerel kültürel öğeler ekleyin',
+            'Dil çevirisi yapın',
+            'Yerel müzik kullanın'
+          ]
+        }]
+      };
 
       // Step 5: Transform backend analysis to frontend format
       const analysis = analysisResponse.results[0];

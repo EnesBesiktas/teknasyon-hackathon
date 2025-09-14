@@ -105,7 +105,7 @@ export const AnalysisResults: React.FC<AnalysisResultsProps> = ({
           <div className="flex items-center justify-center gap-3 mb-4">
             <BarChart3 className="w-8 h-8 text-orange-400" />
             <h2 className="text-3xl font-bold text-white drop-shadow-lg">
-               Kültürel Uygunluk Raporu
+              Kültürel Uygunluk Raporu
             </h2>
           </div>
           <p className="text-orange-200 text-lg drop-shadow-lg">
@@ -254,18 +254,55 @@ export const AnalysisResults: React.FC<AnalysisResultsProps> = ({
           </div>
         </div>
 
-        {/* Toggle Detailed Analysis */}
-        <div className="text-center mb-8">
-          <Button
-            onClick={() => setShowDetailedView(!showDetailedView)}
-            disabled={isLoadingDetails}
-            className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 disabled:bg-gray-400 transition-all duration-200 flex items-center gap-2 mx-auto"
-          >
-            {showDetailedView ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-            {isLoadingDetails ? 'Detaylar Yükleniyor...' :
-             showDetailedView ? 'Detaylı Analizi Gizle' : 'Detaylı Kültürel Analizi Görüntüle'}
-          </Button>
-        </div>
+         {/* Action Buttons - Three buttons side by side, equal width */}
+         <div className="text-center mb-8">
+           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
+             {/* Detaylı Kültürel Analizi Görüntüle */}
+             <Button
+               onClick={() => setShowDetailedView(!showDetailedView)}
+               disabled={isLoadingDetails}
+               className="px-4 py-4 bg-gradient-to-r from-orange-600 to-red-600 text-white font-semibold rounded-lg hover:from-orange-700 hover:to-red-700 disabled:bg-gray-400 transition-all duration-200 flex items-center justify-center gap-2 hover-flames relative overflow-hidden w-full"
+               style={{
+                 color: 'white !important',
+                 textShadow: '2px 2px 4px rgba(0,0,0,0.8) !important',
+                 zIndex: 10
+               }}
+             >
+               <div className="relative z-20 flex items-center justify-center gap-2">
+                 {showDetailedView ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                 <span className="text-white font-bold drop-shadow-lg text-xs text-center">
+                   {isLoadingDetails ? 'Detaylar Yükleniyor...' :
+                    showDetailedView ? 'Detaylı Analizi Gizle' : 'Detaylı Kültürel Analizi Görüntüle'}
+                 </span>
+               </div>
+               
+               {/* Dragon Fire Effects - Behind text */}
+               {!isLoadingDetails && (
+                 <>
+                   <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-lg animate-pulse"></div>
+                   <div className="absolute -inset-1 bg-gradient-to-r from-orange-600 to-red-600 rounded-lg blur opacity-50 group-hover:opacity-75 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+                   <div className="absolute inset-0 bg-gradient-to-r from-orange-600/5 to-red-600/5 rounded-lg animate-pulse"></div>
+                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-40 animate-pulse"></div>
+                   <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-red-500 to-transparent opacity-40 animate-pulse"></div>
+                 </>
+               )}
+             </Button>
+
+             {/* Yerelleştirmeye Başla */}
+             <Button
+               onClick={onContinue}
+               className="px-4 py-4 bg-gradient-to-r from-purple-600 to-orange-600 text-white font-semibold rounded-lg hover:from-purple-700 hover:to-orange-700 transition-all duration-200 flex items-center justify-center gap-2 hover-flames w-full"
+             >
+               ⚔️ Yerelleştirmeye Başla
+               <ArrowRight className="w-4 h-4" />
+             </Button>
+
+             {/* Raporu İndir */}
+             <button className="px-2 py-2 border-2 border-orange-500/50 text-orange-200 font-semibold rounded-lg hover:border-orange-400 hover:bg-black/30 transition-all duration-200 flex items-center justify-center gap-2 w-full">
+               📄 Raporu İndir
+             </button>
+           </div>
+         </div>
 
         {/* Detailed Cultural Analysis */}
         {showDetailedView && detailedAnalysis.length > 0 && (
@@ -438,22 +475,8 @@ export const AnalysisResults: React.FC<AnalysisResultsProps> = ({
           </div>
         )}
 
-        {/* Action Buttons */}
+        {/* Info Text */}
         <div className="text-center">
-          <div className="inline-flex flex-col sm:flex-row gap-4">
-            <Button
-              onClick={onContinue}
-              className="px-8 py-4 bg-gradient-to-r from-purple-600 to-orange-600 text-white font-semibold rounded-lg hover:from-purple-700 hover:to-orange-700 transition-all duration-200 flex items-center gap-3 hover-flames"
-            >
-              ⚔️ Yerelleştirmeye Başla
-              <ArrowRight className="w-5 h-5" />
-            </Button>
-
-            <button className="px-8 py-4 border-2 border-orange-500/50 text-orange-200 font-semibold rounded-lg hover:border-orange-400 hover:bg-black/30 transition-all duration-200">
-              📄 Raporu İndir
-            </button>
-          </div>
-
           <p className="text-orange-200 text-sm mt-4 drop-shadow-lg">
             Bir sonraki adımda videonuz seçili dillere çevrilecek ve yerel kültürlere uyarlanacak.
           </p>
