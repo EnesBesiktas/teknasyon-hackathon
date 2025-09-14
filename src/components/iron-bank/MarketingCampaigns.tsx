@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Megaphone, Facebook, Target, Zap, Copy, Download, Eye, DollarSign, Users, Clock, Hash, AlertCircle, BarChart3, ExternalLink, Lightbulb, Shuffle, Database, Code } from 'lucide-react';
+import { Megaphone, Facebook, Target, Zap, Copy, Download, Eye, DollarSign, Users, Clock, Hash, AlertCircle, BarChart3, ExternalLink, Lightbulb, Shuffle } from 'lucide-react';
 import type { Country, CampaignData } from '../../types/iron-bank';
 import { Button } from '../ui/Button';
 import { createCampaignService } from '../../services/api/campaign';
 import { useLocalStorageService } from '../../hooks/use-service';
-import CampaignResponseDisplay from './CampaignResponseDisplay';
 
 interface MarketingCampaignsProps {
   targetCountries: Country[];
@@ -22,8 +21,7 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
   const [isGenerating, setIsGenerating] = useState(false);
   const [selectedPlatform, setSelectedPlatform] = useState<'all' | 'facebook' | 'google' | 'tiktok'>('all');
   const [error, setError] = useState<string | null>(null);
-  const [showResponseStructure, setShowResponseStructure] = useState(false);
-  const [fullResponseData, setFullResponseData] = useState<unknown>(null);
+  // Removed response structure display state
   
   // Get service dependencies
   const localStorageService = useLocalStorageService();
@@ -107,8 +105,7 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
         max_variants: 2
       });
 
-      // Store full response data for detailed view
-      setFullResponseData(response);
+      // Response data is now directly used without detailed view
 
       // Transform backend data to enhanced frontend format
       const enhancedCampaigns = campaignService.transformToFrontendFormat(response);
@@ -148,13 +145,13 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
   const getPlatformIcon = (platform: string) => {
     switch (platform) {
       case 'facebook':
-        return <Facebook className="w-5 h-5 text-blue-600" />;
+        return <Facebook className="w-6 h-6 text-blue-400" />;
       case 'google':
-        return <Target className="w-5 h-5 text-red-600" />;
+        return <Target className="w-6 h-6 text-red-400" />;
       case 'tiktok':
-        return <Zap className="w-5 h-5 text-black" />;
+        return <Zap className="w-6 h-6 text-gray-300" />;
       default:
-        return <Megaphone className="w-5 h-5" />;
+        return <Megaphone className="w-6 h-6 text-orange-400" />;
     }
   };
 
@@ -171,6 +168,246 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     // You could add a toast notification here
+  };
+
+  // Platform-specific export functions
+  const exportCampaignForPlatform = (campaign: CampaignData, country: Country) => {
+    const countryName = campaign.countryName || country.name;
+    
+    switch (campaign.platform) {
+      case 'facebook':
+        exportFacebookCampaign(campaign, countryName);
+        break;
+      case 'google':
+        exportGoogleAdsCampaign(campaign, countryName);
+        break;
+      case 'tiktok':
+        exportTikTokCampaign(campaign, countryName);
+        break;
+      default:
+        exportGenericCampaign(campaign, countryName);
+    }
+  };
+
+  const exportFacebookCampaign = (campaign: CampaignData, countryName: string) => {
+    const facebookData = {
+      campaign_name: `${countryName}_Facebook_Campaign_${new Date().getTime()}`,
+      objective: "CONVERSIONS",
+      status: "PAUSED",
+      buying_type: "AUCTION",
+      adsets: [{
+        name: `${countryName}_Facebook_AdSet`,
+        optimization_goal: "CONVERSIONS",
+        billing_event: "IMPRESSIONS",
+        bid_amount: Math.round(campaign.budget.suggested / 30 * 100), // Daily budget in cents
+        daily_budget: Math.round(campaign.budget.suggested / 30 * 100),
+        targeting: {
+          age_min: parseInt(campaign.targeting.ageRange.split('-')[0]),
+          age_max: parseInt(campaign.targeting.ageRange.split('-')[1]),
+          genders: [0], // All genders
+          interests: campaign.targeting.interests.map(interest => ({ name: interest })),
+          demographics: campaign.targeting.demographics
+        },
+        ads: [{
+          name: `${countryName}_Facebook_Ad`,
+          status: "PAUSED",
+          creative: {
+            object_story_spec: {
+              page_id: "YOUR_PAGE_ID", // To be replaced
+              link_data: {
+                link: "YOUR_LANDING_PAGE_URL", // To be replaced
+                message: campaign.adText,
+                call_to_action: {
+                  type: campaign.callToAction?.toUpperCase().replace(' ', '_') || "LEARN_MORE"
+                },
+                name: campaign.creative?.headline || "Facebook Campaign"
+              }
+            }
+          }
+        }]
+      }],
+      special_requirements: campaign.policyNotes || []
+    };
+
+    downloadJSON(facebookData, `Facebook_Campaign_${countryName}_${new Date().toISOString().split('T')[0]}.json`);
+  };
+
+  const exportGoogleAdsCampaign = (campaign: CampaignData, countryName: string) => {
+    const googleAdsData = {
+      campaign: {
+        name: `${countryName}_GoogleAds_Campaign_${new Date().getTime()}`,
+        advertisingChannelType: "SEARCH",
+        status: "PAUSED",
+        biddingStrategy: {
+          targetCpa: {
+            targetCpaMicros: Math.round(campaign.budget.suggested / 30 * 1000000 / 100) // Estimated CPA
+          }
+        },
+        budget: {
+          amountMicros: Math.round(campaign.budget.suggested / 30 * 1000000), // Daily budget in micros
+          deliveryMethod: "STANDARD"
+        }
+      },
+      adGroups: [{
+        name: `${countryName}_GoogleAds_AdGroup`,
+        status: "PAUSED",
+        cpcBidMicros: 1000000, // $1 default bid
+        keywords: campaign.targeting.interests.map(interest => ({
+          text: interest.toLowerCase().replace(/\s+/g, ' '),
+          matchType: "BROAD"
+        })),
+        ads: [{
+          type: "RESPONSIVE_SEARCH_AD",
+          responsiveSearchAd: {
+            headlines: [
+              { text: campaign.creative?.headline || campaign.adText.substring(0, 30) },
+              { text: campaign.callToAction || "Learn More" },
+              { text: `${countryName} Special Offer` }
+            ],
+            descriptions: [
+              { text: campaign.adText.substring(0, 90) },
+              { text: campaign.adText.substring(90, 180) || "Discover amazing products" }
+            ],
+            path1: countryName.toLowerCase().replace(/\s+/g, ''),
+            path2: "offer"
+          }
+        }]
+      }],
+      targeting: {
+        demographics: campaign.targeting.demographics,
+        ageRange: campaign.targeting.ageRange,
+        interests: campaign.targeting.interests
+      },
+      tracking: {
+        utm_source: "google",
+        utm_medium: "cpc",
+        utm_campaign: campaign.measurement?.utm?.split('&').find(p => p.includes('utm_campaign'))?.split('=')[1] || countryName.toLowerCase()
+      },
+      compliance_notes: campaign.policyNotes || []
+    };
+
+    downloadJSON(googleAdsData, `GoogleAds_Campaign_${countryName}_${new Date().toISOString().split('T')[0]}.json`);
+  };
+
+  const exportTikTokCampaign = (campaign: CampaignData, countryName: string) => {
+    const tiktokData = {
+      campaign: {
+        campaign_name: `${countryName}_TikTok_Campaign_${new Date().getTime()}`,
+        objective_type: "CONVERSIONS",
+        budget_mode: "BUDGET_MODE_DAILY",
+        budget: Math.round(campaign.budget.suggested / 30), // Daily budget
+        status: "DISABLE"
+      },
+      adGroups: [{
+        adgroup_name: `${countryName}_TikTok_AdGroup`,
+        placement_type: "PLACEMENT_TYPE_AUTOMATIC",
+        age: campaign.targeting.ageRange.split('-').map(age => parseInt(age.trim())),
+        gender: "GENDER_UNLIMITED",
+        interests: campaign.targeting.interests,
+        budget: Math.round(campaign.budget.suggested / 30),
+        bid_type: "BID_TYPE_AUTO",
+        optimization_goal: "CONVERSION"
+      }],
+      creatives: [{
+        ad_name: `${countryName}_TikTok_Ad`,
+        ad_text: campaign.adText,
+        call_to_action_text: campaign.callToAction || "Learn More",
+        video_info: {
+          aspect_ratio: campaign.creative?.aspectRatio || "9:16",
+          video_url: "YOUR_VIDEO_URL" // To be replaced
+        },
+        landing_page_url: "YOUR_LANDING_PAGE_URL", // To be replaced
+        hashtags: campaign.creative?.hashtags || [],
+        display_name: campaign.creative?.headline || "TikTok Campaign"
+      }],
+      tracking: {
+        utm_parameters: campaign.measurement?.utm || "",
+        pixel_code: "YOUR_TIKTOK_PIXEL_CODE" // To be replaced
+      },
+      targeting_summary: {
+        demographics: campaign.targeting.demographics,
+        interests: campaign.targeting.interests,
+        estimated_reach: "To be calculated by TikTok"
+      },
+      compliance_requirements: campaign.policyNotes || []
+    };
+
+    downloadJSON(tiktokData, `TikTok_Campaign_${countryName}_${new Date().toISOString().split('T')[0]}.json`);
+  };
+
+  const exportGenericCampaign = (campaign: CampaignData, countryName: string) => {
+    const genericData = {
+      campaign_info: {
+        name: `${countryName}_Campaign_${campaign.platform}`,
+        platform: campaign.platform,
+        country: countryName,
+        created_date: new Date().toISOString()
+      },
+      content: {
+        ad_text: campaign.adText,
+        call_to_action: campaign.callToAction,
+        headline: campaign.creative?.headline,
+        hashtags: campaign.creative?.hashtags
+      },
+      targeting: campaign.targeting,
+      budget: campaign.budget,
+      creative_specs: campaign.creative,
+      variants: campaign.variants,
+      measurement: campaign.measurement,
+      policy_notes: campaign.policyNotes
+    };
+
+    downloadJSON(genericData, `${campaign.platform}_Campaign_${countryName}_${new Date().toISOString().split('T')[0]}.json`);
+  };
+
+  const downloadJSON = (data: any, filename: string) => {
+    const jsonStr = JSON.stringify(data, null, 2);
+    const blob = new Blob([jsonStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  const exportAllCountryCampaigns = () => {
+    const allData = {
+      export_info: {
+        created_date: new Date().toISOString(),
+        total_countries: targetCountries.length,
+        total_campaigns: campaignData.length,
+        platforms: [...new Set(campaignData.map(c => c.platform))]
+      },
+      campaigns_by_country: targetCountries.map(country => ({
+        country: {
+          code: country.code,
+          name: country.name,
+          flag: country.flag,
+          language: country.language
+        },
+        campaigns: campaignData
+          .filter(campaign => campaign.country === country.code)
+          .map(campaign => ({
+            platform: campaign.platform,
+            content: {
+              ad_text: campaign.adText,
+              call_to_action: campaign.callToAction,
+              headline: campaign.creative?.headline,
+              hashtags: campaign.creative?.hashtags
+            },
+            targeting: campaign.targeting,
+            budget: campaign.budget,
+            variants: campaign.variants,
+            measurement: campaign.measurement,
+            policy_notes: campaign.policyNotes
+          }))
+      }))
+    };
+
+    downloadJSON(allData, `All_Campaigns_Export_${new Date().toISOString().split('T')[0]}.json`);
   };
 
   if (isGenerating) {
@@ -267,28 +504,49 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
             })}
           </div>
 
-          {/* Response Structure Toggle */}
-          {fullResponseData && (
-            <Button
-              onClick={() => setShowResponseStructure(!showResponseStructure)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
-                showResponseStructure 
-                  ? 'bg-blue-600 text-white border-blue-500' 
-                  : 'bg-black/50 text-blue-300 border-blue-500/50 hover:bg-blue-600/20'
-              }`}
+          {/* Action Buttons */}
+          <div className="flex items-center gap-3">
+            <Button 
+              onClick={exportAllCountryCampaigns}
+              className="flex items-center gap-2 px-4 py-2 bg-green-600/20 text-green-400 border border-green-500/50 rounded-lg hover:bg-green-600/30 transition-colors"
             >
-              {showResponseStructure ? <Code className="w-4 h-4" /> : <Database className="w-4 h-4" />}
-              {showResponseStructure ? 'Yapı Görünümünü Gizle' : 'Response Yapısını Göster'}
+              <Download className="w-4 h-4" />
+              Tüm Kampanyaları İndir
             </Button>
-          )}
+            <Button 
+              onClick={generateCampaigns}
+              disabled={isGenerating}
+              className="flex items-center gap-2 px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 disabled:opacity-50 transition-colors"
+            >
+              <Shuffle className="w-4 h-4" />
+              Yeniden Oluştur
+            </Button>
+          </div>
         </div>
 
-        {/* Response Structure Display */}
-        {showResponseStructure && fullResponseData && (
-          <div className="mb-8">
-            <CampaignResponseDisplay data={fullResponseData as any} />
+        {/* Campaign Statistics */}
+        <div className="mb-8 grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="bg-purple-900/20 border border-purple-500/30 rounded-lg p-4 text-center">
+            <div className="text-2xl font-bold text-purple-400">{targetCountries.length}</div>
+            <div className="text-sm text-purple-300">Hedef Ülke</div>
           </div>
-        )}
+          <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4 text-center">
+            <div className="text-2xl font-bold text-blue-400">{campaignData.length}</div>
+            <div className="text-sm text-blue-300">Toplam Kampanya</div>
+          </div>
+          <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-4 text-center">
+            <div className="text-2xl font-bold text-green-400">
+              {campaignData.reduce((acc, c) => acc + (c.variants?.length || 0), 0)}
+            </div>
+            <div className="text-sm text-green-300">A/B Test Varyantı</div>
+          </div>
+          <div className="bg-orange-900/20 border border-orange-500/30 rounded-lg p-4 text-center">
+            <div className="text-2xl font-bold text-orange-400">
+              {new Set(campaignData.map(c => c.platform)).size}
+            </div>
+            <div className="text-sm text-orange-300">Platform</div>
+          </div>
+        </div>
 
         {/* Campaigns by Country */}
         <div className="space-y-8">
@@ -309,7 +567,15 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                     </p>
                   </div>
                 </div>
-                <Button className="flex items-center gap-2 px-4 py-2 bg-black/60 text-white border border-orange-500/50 rounded-lg hover:bg-orange-500/10 hover:border-orange-400 hover-flames relative overflow-hidden" style={{ color: 'white !important', textShadow: '2px 2px 4px rgba(0,0,0,0.8) !important' }}>
+                <Button 
+                  onClick={() => {
+                    campaigns.forEach(campaign => {
+                      exportCampaignForPlatform(campaign, country);
+                    });
+                  }}
+                  className="flex items-center gap-2 px-4 py-2 bg-black/60 text-white border border-orange-500/50 rounded-lg hover:bg-orange-500/10 hover:border-orange-400 hover-flames relative overflow-hidden" 
+                  style={{ color: 'white !important', textShadow: '2px 2px 4px rgba(0,0,0,0.8) !important' }}
+                >
                   <div className="relative z-20 flex items-center gap-2">
                     <Download className="w-4 h-4" />
                     <span className="text-white font-bold drop-shadow-lg">Tümünü İndir</span>
@@ -327,55 +593,129 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
               {/* Platform Campaigns */}
               <div className="grid gap-6">
                 {campaigns.map((campaign, index) => (
-                  <div key={index} className="border border-gray-600/30 rounded-lg p-6 bg-black/30">
-                    {/* Campaign Header */}
+                  <div key={index} className="border border-gray-600/30 rounded-xl p-6 bg-black/30 hover:bg-black/20 transition-all duration-300">
+                    {/* Campaign Header - Enhanced Platform Visibility */}
                     <div className="mb-6">
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex items-center gap-3">
-                          {getPlatformIcon(campaign.platform)}
-                          <div>
-                            <span className="font-bold text-white text-xl capitalize">
-                              {campaign.platform === 'google' ? 'Google Ads' : campaign.platform}
-                            </span>
-                            <p className="text-orange-300 text-sm">Kampanya İçeriği</p>
+                      {/* Platform Brand Header */}
+                      <div className={`mb-4 p-4 rounded-lg border-2 ${
+                        campaign.platform === 'facebook' ? 'bg-blue-600/10 border-blue-500/50' :
+                        campaign.platform === 'google' ? 'bg-red-600/10 border-red-500/50' :
+                        campaign.platform === 'tiktok' ? 'bg-gray-800/50 border-gray-500/50' :
+                        'bg-orange-600/10 border-orange-500/50'
+                      }`}>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-4">
+                            <div className={`p-3 rounded-lg ${
+                              campaign.platform === 'facebook' ? 'bg-blue-600/20' :
+                              campaign.platform === 'google' ? 'bg-red-600/20' :
+                              campaign.platform === 'tiktok' ? 'bg-gray-700/50' :
+                              'bg-orange-600/20'
+                            }`}>
+                              {getPlatformIcon(campaign.platform)}
+                            </div>
+                            <div>
+                              <h3 className={`text-2xl font-bold ${
+                                campaign.platform === 'facebook' ? 'text-blue-400' :
+                                campaign.platform === 'google' ? 'text-red-400' :
+                                campaign.platform === 'tiktok' ? 'text-gray-300' :
+                                'text-orange-400'
+                              }`}>
+                                {campaign.platform === 'google' ? 'Google Ads' : 
+                                 campaign.platform === 'facebook' ? 'Facebook' :
+                                 campaign.platform === 'tiktok' ? 'TikTok' : campaign.platform}
+                              </h3>
+                              <p className={`text-sm font-medium ${
+                                campaign.platform === 'facebook' ? 'text-blue-300' :
+                                campaign.platform === 'google' ? 'text-red-300' :
+                                campaign.platform === 'tiktok' ? 'text-gray-400' :
+                                'text-orange-300'
+                              }`}>
+                                {campaign.platform === 'facebook' ? 'Sosyal Medya Reklamı' :
+                                 campaign.platform === 'google' ? 'Arama Motoru Reklamı' :
+                                 campaign.platform === 'tiktok' ? 'Video Platformu Reklamı' :
+                                 'Dijital Reklam'}
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="px-3 py-1 bg-blue-600/20 text-blue-300 rounded-full text-sm">
-                            Detaylı Kampanya
-                          </span>
+                          <div className="text-right">
+                            <div className={`px-4 py-2 rounded-lg font-semibold text-sm ${
+                              campaign.platform === 'facebook' ? 'bg-blue-600/20 text-blue-300 border border-blue-500/30' :
+                              campaign.platform === 'google' ? 'bg-red-600/20 text-red-300 border border-red-500/30' :
+                              campaign.platform === 'tiktok' ? 'bg-gray-700/50 text-gray-300 border border-gray-500/30' :
+                              'bg-orange-600/20 text-orange-300 border border-orange-500/30'
+                            }`}>
+                              {campaign.budget.currency} {campaign.budget.suggested.toLocaleString()}
+                            </div>
+                            <p className="text-xs text-gray-400 mt-1">Önerilen Bütçe</p>
+                          </div>
                         </div>
                       </div>
                       
-                      {/* Response Structure Overview */}
-                      <div className="bg-gray-800/50 border border-gray-600/50 rounded-lg p-4 mb-4">
-                        <h5 className="font-medium text-gray-300 mb-2 flex items-center gap-2">
+                      {/* Platform-Specific Quick Stats */}
+                      <div className={`rounded-lg p-4 mb-4 border ${
+                        campaign.platform === 'facebook' ? 'bg-blue-900/20 border-blue-500/30' :
+                        campaign.platform === 'google' ? 'bg-red-900/20 border-red-500/30' :
+                        campaign.platform === 'tiktok' ? 'bg-gray-800/50 border-gray-500/30' :
+                        'bg-orange-900/20 border-orange-500/30'
+                      }`}>
+                        <h5 className={`font-medium mb-3 flex items-center gap-2 ${
+                          campaign.platform === 'facebook' ? 'text-blue-300' :
+                          campaign.platform === 'google' ? 'text-red-300' :
+                          campaign.platform === 'tiktok' ? 'text-gray-300' :
+                          'text-orange-300'
+                        }`}>
                           <BarChart3 className="w-4 h-4" />
-                          Kampanya İçerik Özeti
+                          {campaign.platform === 'facebook' ? 'Facebook' :
+                           campaign.platform === 'google' ? 'Google Ads' :
+                           campaign.platform === 'tiktok' ? 'TikTok' : 'Platform'} Kampanya Özellikleri
                         </h5>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
-                          <div className="bg-black/40 rounded p-2 text-center">
-                            <div className="text-orange-300 font-semibold">Ana Reklam Metni</div>
-                            <div className="text-gray-400">Asıl kampanya içeriği</div>
+                          <div className={`rounded-lg p-3 text-center border ${
+                            campaign.platform === 'facebook' ? 'bg-blue-900/20 border-blue-500/20' :
+                            campaign.platform === 'google' ? 'bg-red-900/20 border-red-500/20' :
+                            campaign.platform === 'tiktok' ? 'bg-gray-700/30 border-gray-500/20' :
+                            'bg-orange-900/20 border-orange-500/20'
+                          }`}>
+                            <div className="w-2 h-2 bg-orange-400 rounded-full mx-auto mb-1"></div>
+                            <div className="text-orange-300 font-semibold text-xs">Ana Reklam Metni</div>
+                            <div className="text-gray-400 text-xs">Hazır</div>
                           </div>
-                          <div className="bg-black/40 rounded p-2 text-center">
-                            <div className="text-green-300 font-semibold">Eylem Çağrısı</div>
-                            <div className="text-gray-400">CTA butonu</div>
+                          <div className={`rounded-lg p-3 text-center border ${
+                            campaign.platform === 'facebook' ? 'bg-blue-900/20 border-blue-500/20' :
+                            campaign.platform === 'google' ? 'bg-red-900/20 border-red-500/20' :
+                            campaign.platform === 'tiktok' ? 'bg-gray-700/30 border-gray-500/20' :
+                            'bg-orange-900/20 border-orange-500/20'
+                          }`}>
+                            <div className="w-2 h-2 bg-green-400 rounded-full mx-auto mb-1"></div>
+                            <div className="text-green-300 font-semibold text-xs">Eylem Çağrısı</div>
+                            <div className="text-gray-400 text-xs">Belirlendi</div>
                           </div>
-                          <div className="bg-black/40 rounded p-2 text-center">
-                            <div className="text-purple-300 font-semibold">Kreatif Detaylar</div>
-                            <div className="text-gray-400">Tasarım ve format</div>
+                          <div className={`rounded-lg p-3 text-center border ${
+                            campaign.platform === 'facebook' ? 'bg-blue-900/20 border-blue-500/20' :
+                            campaign.platform === 'google' ? 'bg-red-900/20 border-red-500/20' :
+                            campaign.platform === 'tiktok' ? 'bg-gray-700/30 border-gray-500/20' :
+                            'bg-orange-900/20 border-orange-500/20'
+                          }`}>
+                            <div className="w-2 h-2 bg-purple-400 rounded-full mx-auto mb-1"></div>
+                            <div className="text-purple-300 font-semibold text-xs">Format</div>
+                            <div className="text-gray-400 text-xs">{campaign.creative?.aspectRatio || 'Belirlendi'}</div>
                           </div>
-                          <div className="bg-black/40 rounded p-2 text-center">
-                            <div className="text-cyan-300 font-semibold">Alternatif Versiyonlar</div>
-                            <div className="text-gray-400">A/B test varyantları</div>
+                          <div className={`rounded-lg p-3 text-center border ${
+                            campaign.platform === 'facebook' ? 'bg-blue-900/20 border-blue-500/20' :
+                            campaign.platform === 'google' ? 'bg-red-900/20 border-red-500/20' :
+                            campaign.platform === 'tiktok' ? 'bg-gray-700/30 border-gray-500/20' :
+                            'bg-orange-900/20 border-orange-500/20'
+                          }`}>
+                            <div className="w-2 h-2 bg-cyan-400 rounded-full mx-auto mb-1"></div>
+                            <div className="text-cyan-300 font-semibold text-xs">A/B Varyantları</div>
+                            <div className="text-gray-400 text-xs">{campaign.variants?.length || 0} adet</div>
                           </div>
                         </div>
                       </div>
                     </div>
 
                     {/* Campaign Content Section */}
-                    <div className="space-y-4 mb-4">
+                    <div className="space-y-6 mb-6">
                       {/* Main Ad Text */}
                       <div className="bg-black/40 rounded-lg p-4 border border-orange-500/30">
                         <div className="flex items-center justify-between mb-3">
@@ -907,48 +1247,50 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                           </div>
                         </div>
 
-                        {/* Performance Metrics Preview */}
-                        <div className="bg-indigo-600/10 border border-indigo-600/30 rounded-lg p-4">
-                          <h5 className="font-medium text-indigo-300 mb-3 flex items-center gap-2">
-                            <BarChart3 className="w-4 h-4" />
-                            İzlenecek Performans Metrikleri
-                          </h5>
-                          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-                            <div className="text-center">
-                              <div className="text-indigo-200 font-medium">CTR</div>
-                              <div className="text-gray-400 text-xs">Tıklama Oranı</div>
-                            </div>
-                            <div className="text-center">
-                              <div className="text-indigo-200 font-medium">CPC</div>
-                              <div className="text-gray-400 text-xs">Tık Başına Maliyet</div>
-                            </div>
-                            <div className="text-center">
-                              <div className="text-indigo-200 font-medium">CPM</div>
-                              <div className="text-gray-400 text-xs">1000 Gösterim Maliyeti</div>
-                            </div>
-                            <div className="text-center">
-                              <div className="text-indigo-200 font-medium">ROAS</div>
-                              <div className="text-gray-400 text-xs">Reklam Harcama Getirisi</div>
-                            </div>
-                          </div>
-                        </div>
                       </div>
                     )}
 
-                    {/* Action Buttons */}
-                    <div className="flex items-center gap-3 pt-4 border-t border-gray-600/30">
-                      <Button className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
-                        <Eye className="w-4 h-4" />
-                        Önizle
-                      </Button>
-                      <Button className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-                        <Target className="w-4 h-4" />
-                        Kampanyayı Başlat
-                      </Button>
-                      <Button className="flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-300 rounded-lg hover:bg-gray-700">
-                        <Download className="w-4 h-4" />
-                        Detayları İndir
-                      </Button>
+                    {/* Platform-Specific Action Buttons */}
+                    <div className={`flex items-center justify-between pt-6 border-t ${
+                      campaign.platform === 'facebook' ? 'border-blue-500/20' :
+                      campaign.platform === 'google' ? 'border-red-500/20' :
+                      campaign.platform === 'tiktok' ? 'border-gray-500/20' :
+                      'border-orange-500/20'
+                    }`}>
+                      <div className="flex items-center gap-3">
+                        <Button className={`flex items-center gap-2 px-4 py-2 text-white rounded-lg transition-all duration-300 shadow-lg ${
+                          campaign.platform === 'facebook' ? 'bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 hover:shadow-blue-500/25' :
+                          campaign.platform === 'google' ? 'bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 hover:shadow-red-500/25' :
+                          campaign.platform === 'tiktok' ? 'bg-gradient-to-r from-gray-700 to-gray-600 hover:from-gray-800 hover:to-gray-700 hover:shadow-gray-500/25' :
+                          'bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-700 hover:to-orange-600 hover:shadow-orange-500/25'
+                        }`}>
+                          <Eye className="w-4 h-4" />
+                          <span className="font-medium">
+                            {campaign.platform === 'facebook' ? 'Facebook\'ta Önizle' :
+                             campaign.platform === 'google' ? 'Google\'da Önizle' :
+                             campaign.platform === 'tiktok' ? 'TikTok\'ta Önizle' :
+                             'Önizle'}
+                          </span>
+                        </Button>
+                        <Button className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-600 to-green-500 text-white rounded-lg hover:from-green-700 hover:to-green-600 transition-all duration-300 shadow-lg hover:shadow-green-500/25">
+                          <Target className="w-4 h-4" />
+                          <span className="font-medium">Kampanyayı Başlat</span>
+                        </Button>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Button 
+                          onClick={() => exportCampaignForPlatform(campaign, country)}
+                          className="flex items-center gap-2 px-4 py-2 border border-gray-400/30 text-gray-300 rounded-lg hover:bg-gray-700/50 hover:border-gray-300 transition-all duration-300"
+                        >
+                          <Download className="w-4 h-4" />
+                          <span className="font-medium">
+                            {campaign.platform === 'facebook' ? 'Facebook Kampanyası İndir' :
+                             campaign.platform === 'google' ? 'Google Ads İndir' :
+                             campaign.platform === 'tiktok' ? 'TikTok Kampanyası İndir' :
+                             'Kampanyayı İndir'}
+                          </span>
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 ))}
