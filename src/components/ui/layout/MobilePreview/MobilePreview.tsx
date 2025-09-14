@@ -41,12 +41,12 @@ const mockInstagramPosts = [
     user: {
       username: 'royal_ads_tr',
       displayName: 'Royal Ads Turkey',
-      avatar: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9InVybCgjZ3JhZGllbnQwKSIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudDAiIHgxPSIwIiB5MT0iMCIgeDI9IjQwIiB5Mj0iNDAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iI0ZGRkYwMCIvPgo8c3RvcCBvZmZzZXQ9IjAuNSIgc3RvcC1jb2xvcj0iI0ZGNzAwMCIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNGRjAwMDAiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cGF0aCBkPSJNMTIgMTJIMjhWMjhIMTJWMTJaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTYgMTZIMjRWMjRIMTZWMTZaIiBmaWxsPSIjRkY3MDAwIi8+CjxwYXRoIGQ9Ik0xOCAxOEgyMlYyMkgxOFYxOFoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=',
+      avatar: '/api/placeholder/40/40',
       isVerified: true,
     },
     media: {
       type: 'video' as const,
-      url: 'https://images.unsplash.com/photo-1506905925346-14b5e0c7e1b0?w=400&h=400&fit=crop&crop=center',
+      url: '/api/placeholder/400/400',
       videoData: mockVideoData.turkish,
     },
     caption: '🏰 Krallık reklamlarımızla hedef kitlenize ulaşın! #RoyalAds #Marketing',
@@ -59,30 +59,30 @@ const mockInstagramPosts = [
   {
     id: '2',
     user: {
-      username: 'sunset_photographer',
-      displayName: 'Sunset Photographer',
-      avatar: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9InVybCgjZ3JhZGllbnQyKSIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudDIiIHgxPSIwIiB5MT0iMCIgeDI9IjQwIiB5Mj0iNDAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iI0ZGMDBGQyIvPgo8c3RvcCBvZmZzZXQ9IjAuNSIgc3RvcC1jb2xvcj0iI0ZGMDBGQyIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNGRjAwRkMiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cGF0aCBkPSJNMTIgMTJIMjhWMjhIMTJWMTJaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTYgMTZIMjRWMjRIMTZWMTZaIiBmaWxsPSIjRkYwMEZDIi8+CjxwYXRoIGQ9Ik0xOCAxOEgyMlYyMkgxOFYxOFoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=',
+      username: 'user_organic',
+      displayName: 'Organic User',
+      avatar: '/api/placeholder/40/40',
     },
     media: {
       type: 'image' as const,
-      url: 'https://images.unsplash.com/photo-1503803548695-c2a7b4a5b875?fm=jpg&q=60&w=400&h=400&fit=crop&crop=center',
+      url: '/api/placeholder/400/400',
     },
-    caption: '🌅 Bu akşamki gün batımı muhteşemdi! Gökyüzündeki renklerin dansı büyüleyiciydi. Doğanın sunduğu bu anları yakalamak için her gün farklı yerler keşfediyorum. Gün batımı fotoğrafçılığı sadece bir hobi değil, bir tutku! #günbatımı #sunset #fotograf #doğa #gökyüzü #renkler #photography #nature #sky #colors #beautiful #instagood #sunsetphotography #passion #art #photographer #landscape #goldenhour #magic #wonderful #amazing',
-    likes: '4,523',
-    comments: '287',
-    timeAgo: '1h',
+    caption: 'Beautiful sunset today! ✨',
+    likes: '42',
+    comments: '3',
+    timeAgo: '4h',
   },
   {
     id: '3',
     user: {
       username: 'royal_ads_de',
       displayName: 'Royal Ads Germany',
-      avatar: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9InVybCgjZ3JhZGllbnQxKSIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudDEiIHgxPSIwIiB5MT0iMCIgeDI9IjQwIiB5Mj0iNDAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iI0ZGMDAwMCIvPgo8c3RvcCBvZmZzZXQ9IjAuNSIgc3RvcC1jb2xvcj0iI0ZGYzAwMCIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNGRjAwMDAiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cGF0aCBkPSJNMTIgMTJIMjhWMjhIMTJWMTJaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTYgMTZIMjRWMjRIMTZWMTZaIiBmaWxsPSIjRkYwMDAwIi8+CjxwYXRoIGQ9Ik0xOCAxOEgyMlYyMkgxOFYxOFoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=',
+      avatar: '/api/placeholder/40/40',
       isVerified: true,
     },
     media: {
       type: 'video' as const,
-      url: 'https://images.unsplash.com/photo-1506905925346-14b5e0c7e1b0?w=400&h=400&fit=crop&crop=center',
+      url: '/api/placeholder/400/400',
       videoData: mockVideoData.german,
     },
     caption: '👑 Erreichen Sie Ihre Zielgruppe mit königlichen Anzeigen! #RoyalAds #Marketing',
@@ -99,14 +99,14 @@ const mockFacebookPosts = [
     id: '1',
     user: {
       name: 'Royal Ads Turkey',
-      avatar: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9InVybCgjZ3JhZGllbnQwKSIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudDAiIHgxPSIwIiB5MT0iMCIgeDI9IjQwIiB5Mj0iNDAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iI0ZGRkYwMCIvPgo8c3RvcCBvZmZzZXQ9IjAuNSIgc3RvcC1jb2xvcj0iI0ZGNzAwMCIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNGRjAwMDAiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cGF0aCBkPSJNMTIgMTJIMjhWMjhIMTJWMTJaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTYgMTZIMjRWMjRIMTZWMTZaIiBmaWxsPSIjRkY3MDAwIi8+CjxwYXRoIGQ9Ik0xOCAxOEgyMlYyMkgxOFYxOFoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=',
+      avatar: '/api/placeholder/40/40',
       isVerified: true,
     },
     content: {
       text: '🏰 Krallık reklamlarımızla hedef kitlenize ulaşın! Profesyonel video reklamlar ile işinizi büyütün.',
       media: {
         type: 'video' as const,
-        url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop&crop=center',
+        url: '/api/placeholder/600/400',
         videoData: mockVideoData.turkish,
       },
     },
@@ -122,35 +122,35 @@ const mockFacebookPosts = [
   {
     id: '2',
     user: {
-      name: 'AI Developer',
-      avatar: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9InVybCgjZ3JhZGllbnQzKSIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudDMiIHgxPSIwIiB5MT0iMCIgeDI9IjQwIiB5Mj0iNDAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzAwRkZGRiIvPgo8c3RvcCBvZmZzZXQ9IjAuNSIgc3RvcC1jb2xvcj0iIzAwRkZGRiIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwMEZGRkYiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cGF0aCBkPSJNMTIgMTJIMjhWMjhIMTJWMTJaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTYgMTZIMjRWMjRIMTZWMTZaIiBmaWxsPSIjMDBGRkZGIi8+CjxwYXRoIGQ9Ik0xOCAxOEgyMlYyMkgxOFYxOFoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=',
+      name: 'John Doe',
+      avatar: '/api/placeholder/40/40',
     },
     content: {
-      text: '🤖 ChatGPT-5 ve yeni AI modelleri gerçekten devrim yaratıyor! Bugün yapay zeka ile kod yazma deneyimim inanılmazdı. AI artık sadece asistan değil, gerçek bir iş ortağı haline geldi. Gelecekte yazılım geliştirme nasıl olacak merak ediyorum. #AI #ChatGPT #yapayzeka #programming #coding #tech #innovation #future #software #development #machinelearning #artificialintelligence',
+      text: 'Had a great weekend with family! 🌞',
       media: {
         type: 'image' as const,
-        url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQoq8awIKhXX2akqkC96LHTeRKXEzmqhb0GQ&s',
+        url: '/api/placeholder/600/400',
       },
     },
     engagement: {
-      likes: '3,456',
-      comments: '234',
-      shares: '89',
+      likes: '42',
+      comments: '8',
+      shares: '2',
     },
-    timeAgo: '2 hours ago',
+    timeAgo: '4 hours ago',
   },
   {
     id: '3',
     user: {
       name: 'Royal Ads Germany',
-      avatar: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9InVybCgjZ3JhZGllbnQxKSIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudDEiIHgxPSIwIiB5MT0iMCIgeDI9IjQwIiB5Mj0iNDAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iI0ZGMDAwMCIvPgo8c3RvcCBvZmZzZXQ9IjAuNSIgc3RvcC1jb2xvcj0iI0ZGYzAwMCIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNGRjAwMDAiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cGF0aCBkPSJNMTIgMTJIMjhWMjhIMTJWMTJaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTYgMTZIMjRWMjRIMTZWMTZaIiBmaWxsPSIjRkYwMDAwIi8+CjxwYXRoIGQ9Ik0xOCAxOEgyMlYyMkgxOFYxOFoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=',
+      avatar: '/api/placeholder/40/40',
       isVerified: true,
     },
     content: {
       text: '👑 Erreichen Sie Ihre Zielgruppe mit königlichen Anzeigen! Professionelle Videowerbung für Ihr Unternehmen.',
       media: {
         type: 'video' as const,
-        url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop&crop=center',
+        url: '/api/placeholder/600/400',
         videoData: mockVideoData.german,
       },
     },
@@ -178,7 +178,7 @@ const mockTwitterTweets = [
       text: '🏰 Krallık reklamlarımızla hedef kitlenize ulaşın! #RoyalAds #VideoMarketing #Turkey',
       media: {
         type: 'video' as const,
-        url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop&crop=center',
+        url: '/api/placeholder/600/400',
         videoData: mockVideoData.turkish,
       },
     },
@@ -195,18 +195,18 @@ const mockTwitterTweets = [
   {
     id: '2',
     user: {
-      name: 'Food Blogger',
-      username: 'foodie_life',
-      avatar: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9InVybCgjZ3JhZGllbnQ0KSIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudDQiIHgxPSIwIiB5MT0iMCIgeDI9IjQwIiB5Mj0iNDAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iI0ZGNzAwMCIvPgo8c3RvcCBvZmZzZXQ9IjAuNSIgc3RvcC1jb2xvcj0iI0ZGNzAwMCIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNGRjcwMDAiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cGF0aCBkPSJNMTIgMTJIMjhWMjhIMTJWMTJaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTYgMTZIMjRWMjRIMTZWMTZaIiBmaWxsPSIjRkY3MDAwIi8+CjxwYXRoIGQ9Ik0xOCAxOEgyMlYyMkgxOFYxOFoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=',
+      name: 'User Name',
+      username: 'username',
+      avatar: '/api/placeholder/40/40',
     },
     content: {
-      text: '☕ Bu sabahki kahve deneyimi muhteşemdi! Yerel bir kahve dükkanında barista arkadaşımın özel blend\'i ile hazırladığı latte... Aroması hala burnumda! Kahve kültürü gerçekten bir sanat. Sizce en iyi kahve hangi şehirde? #kahve #coffee #barista #latte #aroma #taste #coffeeaddict #morning #caffeine #coffeelover #specialtycoffee #coffeeshop #local #artisan',
+      text: 'Just had the best coffee ☕ Anyone else addicted to caffeine?',
     },
     engagement: {
-      replies: '47',
-      retweets: '23',
-      likes: '892',
-      views: '3.2K',
+      replies: '3',
+      retweets: '1',
+      likes: '12',
+      views: '156',
     },
     timeAgo: '4h',
   },
@@ -222,7 +222,7 @@ const mockTwitterTweets = [
       text: '👑 Erreichen Sie Ihre Zielgruppe mit königlichen Anzeigen! #RoyalAds #VideoMarketing #Deutschland',
       media: {
         type: 'video' as const,
-        url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop&crop=center',
+        url: '/api/placeholder/600/400',
         videoData: mockVideoData.german,
       },
     },
@@ -272,61 +272,23 @@ const MainScreen: React.FC<{ onVisionAwaken: () => void }> = ({ onVisionAwaken }
         {/* Features */}
         <div className="grid grid-cols-3 gap-4 max-w-xs mx-auto text-center mb-6">
           <div className="space-y-2">
-            <div className="w-8 h-8 rounded-lg bg-[#1877F2] flex items-center justify-center mx-auto">
-              <svg viewBox="0 0 24 24" className="w-5 h-5 fill-white">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-              </svg>
-            </div>
+            <Shield className="h-6 w-6 text-blue-400 mx-auto" />
             <p className="text-xs text-gray-300">Facebook</p>
           </div>
           <div className="space-y-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-600 via-pink-500 to-orange-400 flex items-center justify-center mx-auto">
-              <svg viewBox="0 0 24 24" className="w-5 h-5 fill-white">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-              </svg>
-            </div>
+            <Crown className="h-6 w-6 text-pink-400 mx-auto" />
             <p className="text-xs text-gray-300">Instagram</p>
           </div>
           <div className="space-y-2">
-            <div className="w-8 h-8 rounded-lg bg-black flex items-center justify-center mx-auto">
-              <svg viewBox="0 0 24 24" className="w-5 h-5 fill-white">
-                <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
-              </svg>
-            </div>
+            <Zap className="h-6 w-6 text-gray-300 mx-auto" />
             <p className="text-xs text-gray-300">X/Twitter</p>
           </div>
         </div>
 
-        {/* Fethet Button */}
+        {/* CTA */}
         <div className="text-center">
-          <button
-            onClick={onVisionAwaken}
-            className="
-              relative group px-8 py-3 rounded-xl
-              bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500
-              hover:from-yellow-400 hover:via-orange-400 hover:to-red-400
-              border-2 border-yellow-400
-              shadow-lg hover:shadow-yellow-500/25 hover:shadow-2xl
-              transition-all duration-300 transform
-              hover:scale-105 hover:-translate-y-1
-              active:scale-95
-              focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-yellow-500/50
-              overflow-hidden
-            "
-          >
-            {/* Button Background Effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
-
-            {/* Button Content */}
-            <div className="relative flex items-center justify-center space-x-2">
-              <Crown className="h-5 w-5 text-white group-hover:animate-pulse" />
-              <span className="text-white font-bold text-lg">FETHET</span>
-              <Crown className="h-5 w-5 text-white group-hover:animate-pulse" />
-            </div>
-
-            {/* Shine Effect */}
-            <div className="absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 group-hover:translate-x-full transition-all duration-700" />
-          </button>
+          <VisionAwakenButton onClick={onVisionAwaken} />
+          <p className="text-xs text-gray-500 mt-3 leading-relaxed">Dijital alemde zafer sizi bekliyor</p>
         </div>
       </div>
     </div>
@@ -353,24 +315,21 @@ const KingdomSelection: React.FC<{ onSelectPlatform: (platform: PlatformType) =>
 
     {/* Scrollable Content */}
     <div className="flex-1 overflow-y-auto scrollbar-hide mobile-scroll mobile-text">
-      <div className="min-h-full flex flex-col justify-center p-3 space-y-3">
-        <div className="text-center mb-3">
-          <Crown className="h-8 w-8 text-yellow-400 mx-auto mb-1" />
-          <p className="text-xs text-gray-300 leading-tight mb-1">
+      <div className="min-h-full flex flex-col justify-center p-4 space-y-6">
+        <div className="text-center mb-6">
+          <Crown className="h-12 w-12 text-yellow-400 mx-auto mb-3" />
+          <p className="text-base text-gray-300 leading-tight">
             Kraliyet reklamlarınızı önizlemek için bir alan seçin
           </p>
-          <p className="text-xs text-gray-500 leading-relaxed">
-            Dijital alemde zafer sizi bekliyor
-          </p>
         </div>
 
-        <div className="space-y-1">
-          <KingdomButton platform="facebook" onClick={() => onSelectPlatform('facebook')} className="transform scale-75" />
-          <KingdomButton platform="instagram" onClick={() => onSelectPlatform('instagram')} className="transform scale-75" />
-          <KingdomButton platform="twitter" onClick={() => onSelectPlatform('twitter')} className="transform scale-75" />
+        <div className="space-y-3">
+          <KingdomButton platform="facebook" onClick={() => onSelectPlatform('facebook')} />
+          <KingdomButton platform="instagram" onClick={() => onSelectPlatform('instagram')} />
+          <KingdomButton platform="twitter" onClick={() => onSelectPlatform('twitter')} />
         </div>
 
-        <div className="text-center pt-1">
+        <div className="text-center pt-4">
           <p className="text-xs text-gray-500 leading-relaxed">Her krallık fetih için eşsiz fırsatlar sunar</p>
         </div>
       </div>
@@ -481,21 +440,10 @@ export const MobilePreview: React.FC<MobilePreviewProps> = ({ className = '' }) 
   };
 
   return (
-    <div className={`mobile-container mobile-safe min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black ${className}`}>
-      {/* Main Content Area */}
-      <div className="flex flex-col items-center justify-center p-4 space-y-8">
-        {/* iPhone Frame */}
-        <IPhone15ProFrame>
-          {renderPhoneContent()}
-        </IPhone15ProFrame>
-
-        {/* Vision Awaken Button - Temporary placement for testing (hidden when main screen has internal button) */}
-        {state.currentView !== 'main' && (
-          <div className="flex justify-center">
-            <VisionAwakenButton onClick={handleVisionAwaken} />
-          </div>
-        )}
-      </div>
+    <div className={`mobile-container mobile-safe flex justify-center items-center p-4 bg-gradient-to-br from-gray-900 via-gray-800 to-black ${className}`}>
+      <IPhone15ProFrame>
+        {renderPhoneContent()}
+      </IPhone15ProFrame>
     </div>
   );
 };

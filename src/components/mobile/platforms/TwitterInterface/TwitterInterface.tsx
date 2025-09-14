@@ -5,7 +5,6 @@ import {
   Repeat2,
   Share,
   MoreHorizontal,
-  Crown,
   CheckCircle,
   Home,
   Search,
@@ -17,8 +16,16 @@ import { EnhancedVideoPlayer } from '../../video/EnhancedVideoPlayer';
 import type { TwitterInterfaceProps, Tweet } from './types';
 
 const TwitterHeader: React.FC = () => (
-  <div className="bg-black border-b border-gray-800 px-4 py-2">
+  <div className="bg-black border-b border-gray-800 px-4 py-3">
     <div className="flex items-center justify-center">
+      {/* X logosu */}
+      <svg viewBox="0 0 24 24" className="w-6 h-6 fill-white">
+        <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
+      </svg>
+    </div>
+
+    {/* Alt kısım - For you / Following tabları */}
+    <div className="flex items-center justify-center mt-3">
       <div className="flex items-center space-x-8 text-gray-400">
         <span className="text-white text-base font-bold border-b-2 border-blue-500 pb-2">For you</span>
         <span className="text-base font-bold">Following</span>
@@ -142,12 +149,6 @@ const TweetComponent: React.FC<{
       {tweet.isAd && (
         <div className="absolute top-2 right-2 z-10">
           <div className={`bg-gradient-to-r ${getAdBadgeColor()} px-2 py-1 rounded-full shadow-lg`}>
-            <div className="flex items-center space-x-1">
-              <Crown className="h-3 w-3 text-white" />
-              <span className="text-white text-xs font-bold">
-                Royal Video{tweet.adType === 'german' ? ' (DE)' : ''}
-              </span>
-            </div>
           </div>
         </div>
       )}

@@ -220,7 +220,7 @@ export const IronBank: React.FC = () => {
                 <DragonIcon className="w-12 h-12 text-orange-400" size={48} />
                 <div>
                   <h1 className="text-2xl font-bold text-white drop-shadow-lg">
-                     Rockads Iron Bank
+                    Rockads Iron Bank
                   </h1>
                   <p className="text-orange-200 drop-shadow-lg">
                     AI destekli reklam yerelleştirme platformu
