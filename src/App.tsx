@@ -30,6 +30,7 @@ function App() {
         return 'Iron Bank';
       case '/localization-lab':
         return 'Localization Lab';
+
       case '/settings':
         return 'Settings';
       default:
@@ -49,7 +50,6 @@ function App() {
         <Route path="/ads-account" element={<AdsAccount />} />
         <Route path="/create-rules" element={<CreateRules />} />
         <Route path="/reports" element={<div className="p-6">Reports Page - Coming Soon</div>} />
-        <Route path="/billing" element={<Billing />} />
         <Route path="/iron-bank" element={<IronBank />} />
         <Route path="/localization-lab" element={<LocalizationLab />} />
         <Route path="/settings" element={<div className="p-6">Settings Page - Coming Soon</div>} />
