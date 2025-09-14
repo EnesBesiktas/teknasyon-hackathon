@@ -129,7 +129,7 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
     } catch (error) {
       console.error('Campaign generation failed:', error);
       setError('Kampanya üretimi başarısız oldu. Lütfen tekrar deneyin.');
-      
+
       // Fallback to mock data on error
       generateMockCampaigns();
     } finally {
@@ -185,7 +185,7 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
       budget: campaign.budget,
       timestamp: new Date().toISOString()
     };
-    
+
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -208,7 +208,7 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
         budget: campaign.budget
       }))
     }));
-    
+
     const blob = new Blob([JSON.stringify(allCampaigns, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -255,7 +255,7 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
           <p className="text-red-200 mb-6 drop-shadow-lg">
             {error}
           </p>
-          <Button 
+          <Button
             onClick={() => {
               setError(null);
               generateCampaigns();
@@ -332,14 +332,14 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
 
           {/* Action Buttons */}
           <div className="flex items-center gap-3">
-            <Button 
+            <Button
               onClick={exportAllCountryCampaigns}
               className="flex items-center gap-2 px-4 py-2 bg-green-600/20 text-green-400 border border-green-500/50 rounded-lg hover:bg-green-600/30 transition-colors"
             >
               <Download className="w-4 h-4" />
               Tüm Kampanyaları İndir
             </Button>
-            <Button 
+            <Button
               onClick={generateCampaigns}
               disabled={isGenerating}
               className="flex items-center gap-2 px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 disabled:opacity-50 transition-colors"
@@ -388,25 +388,25 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                     </h3>
                     <p className="text-sm text-orange-200">{campaigns.length} platform için kampanya hazır</p>
                     <p className="text-xs text-gray-400">
-                      Toplam bütçe: {campaigns.reduce((total, c) => total + c.budget.suggested, 0).toLocaleString()} 
+                      Toplam bütçe: {campaigns.reduce((total, c) => total + c.budget.suggested, 0).toLocaleString()}
                       {campaigns[0]?.budget.currency || 'EUR'}
                     </p>
                   </div>
                 </div>
-                <Button 
+                <Button
                   onClick={() => {
                     campaigns.forEach(campaign => {
                       exportCampaignForPlatform(campaign, country);
                     });
                   }}
-                  className="flex items-center gap-2 px-4 py-2 bg-black/60 text-white border border-orange-500/50 rounded-lg hover:bg-orange-500/10 hover:border-orange-400 hover-flames relative overflow-hidden" 
+                  className="flex items-center gap-2 px-4 py-2 bg-black/60 text-white border border-orange-500/50 rounded-lg hover:bg-orange-500/10 hover:border-orange-400 hover-flames relative overflow-hidden"
                   style={{ color: 'white !important', textShadow: '2px 2px 4px rgba(0,0,0,0.8) !important' }}
                 >
                   <div className="relative z-20 flex items-center gap-2">
                     <Download className="w-4 h-4" />
                     <span className="text-white font-bold drop-shadow-lg">Tümünü İndir</span>
                   </div>
-                  
+
                   {/* Dragon Fire Effects - Behind text */}
                   <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-red-500/5 rounded-lg animate-pulse"></div>
                   <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg blur opacity-20 group-hover:opacity-30 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
