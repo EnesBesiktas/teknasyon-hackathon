@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Globe2, Mic, FileText, ArrowRight, Clock, AlertCircle, CheckCircle, Play, Download } from 'lucide-react';
+import { Globe2, Mic, FileText, ArrowRight, Clock, AlertCircle, CheckCircle, Play, Download, Eye } from 'lucide-react';
 import type { Country, LocalizationProgress } from '../../types/iron-bank';
 import { Button } from '../ui/Button';
 import { LocalizationApi } from '../../services/api/localization';
@@ -24,6 +24,11 @@ export const LocalizationWorkspace: React.FC<LocalizationWorkspaceProps> = ({
 }) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [localizationResults, setLocalizationResults] = useState<Record<string, any>>({});
+  
+  // Prompt state'leri
+  const [prompt, setPrompt] = useState('');
+  const [isProcessingPrompt, setIsProcessingPrompt] = useState(false);
+  const [selectedMedia, setSelectedMedia] = useState<string>('video1'); // Seçilen medya dosyası
 
   // Initialize localization results with initial result if available
   useEffect(() => {
@@ -118,6 +123,55 @@ export const LocalizationWorkspace: React.FC<LocalizationWorkspaceProps> = ({
       console.error(`Localization failed for ${country.code}:`, error);
     } finally {
       setIsProcessing(false);
+    }
+  };
+
+  // Prompt gönderme fonksiyonu
+  const handlePromptSubmit = async () => {
+    if (!prompt.trim()) return;
+    
+    setIsProcessingPrompt(true);
+    try {
+      console.log('AI Prompt gönderiliyor:', { prompt, selectedMedia });
+      
+      // Simüle edilmiş AI işleme süreci
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Seçilen medyaya göre işlenecek dosyaları belirle
+      const getProcessedMedia = () => {
+        if (selectedMedia === 'tümü') {
+          return ['Video 1', 'Video 2', 'Görsel 1', 'Görsel 2', 'Görsel 3', 'Görsel 4'];
+        }
+        return [selectedMedia];
+      };
+      
+      const processedMedia = getProcessedMedia();
+      
+      // Mock sonuç - gerçek uygulamada burada AI API'si çağrılacak
+      console.log('AI işleme tamamlandı:', {
+        prompt,
+        selectedMedia,
+        processedMedia,
+        changes: [
+          'Renk doygunluğu artırıldı',
+          'Kontrast optimize edildi',
+          'Ses seviyesi ayarlandı',
+          'Görsel kalitesi iyileştirildi'
+        ]
+      });
+      
+      // Başarı mesajı göster
+      const mediaText = selectedMedia === 'tümü' ? 'Tüm medya dosyaları' : selectedMedia;
+      alert(`AI düzenleme tamamlandı!\n\nSeçilen Medya: ${mediaText}\nPrompt: "${prompt}"\n\nUygulanan değişiklikler:\n• Renk doygunluğu artırıldı\n• Kontrast optimize edildi\n• Ses seviyesi ayarlandı\n• Görsel kalitesi iyileştirildi`);
+      
+      // Prompt'u temizle
+      setPrompt('');
+      
+    } catch (error) {
+      console.error('AI prompt işleme hatası:', error);
+      alert('AI düzenleme sırasında bir hata oluştu. Lütfen tekrar deneyin.');
+    } finally {
+      setIsProcessingPrompt(false);
     }
   };
 
@@ -640,7 +694,7 @@ export const LocalizationWorkspace: React.FC<LocalizationWorkspaceProps> = ({
                       </div>
                       <button className="absolute inset-0 flex items-center justify-center group hover-flames">
                         <div className="w-6 h-6 bg-white/90 rounded-full flex items-center justify-center group-hover:bg-white group-hover:w-8 group-hover:h-8 transition-all duration-300 shadow-lg">
-                          <div className="w-3 h-3 text-green-600 group-hover:w-4 group-hover:h-4 transition-all duration-300">👁️</div>
+                          <Eye className="w-3 h-3 text-green-600 group-hover:w-4 group-hover:h-4 transition-all duration-300" />
                         </div>
                       </button>
                     </div>
@@ -657,7 +711,7 @@ export const LocalizationWorkspace: React.FC<LocalizationWorkspaceProps> = ({
                       </div>
                       <button className="absolute inset-0 flex items-center justify-center group hover-flames">
                         <div className="w-6 h-6 bg-white/90 rounded-full flex items-center justify-center group-hover:bg-white group-hover:w-8 group-hover:h-8 transition-all duration-300 shadow-lg">
-                          <div className="w-3 h-3 text-yellow-600 group-hover:w-4 group-hover:h-4 transition-all duration-300">👁️</div>
+                          <Eye className="w-3 h-3 text-yellow-600 group-hover:w-4 group-hover:h-4 transition-all duration-300" />
                         </div>
                       </button>
                     </div>
@@ -674,7 +728,7 @@ export const LocalizationWorkspace: React.FC<LocalizationWorkspaceProps> = ({
                       </div>
                       <button className="absolute inset-0 flex items-center justify-center group hover-flames">
                         <div className="w-6 h-6 bg-white/90 rounded-full flex items-center justify-center group-hover:bg-white group-hover:w-8 group-hover:h-8 transition-all duration-300 shadow-lg">
-                          <div className="w-3 h-3 text-red-600 group-hover:w-4 group-hover:h-4 transition-all duration-300">👁️</div>
+                          <Eye className="w-3 h-3 text-red-600 group-hover:w-4 group-hover:h-4 transition-all duration-300" />
                         </div>
                       </button>
                     </div>
@@ -691,42 +745,68 @@ export const LocalizationWorkspace: React.FC<LocalizationWorkspaceProps> = ({
                       </div>
                       <button className="absolute inset-0 flex items-center justify-center group hover-flames">
                         <div className="w-6 h-6 bg-white/90 rounded-full flex items-center justify-center group-hover:bg-white group-hover:w-8 group-hover:h-8 transition-all duration-300 shadow-lg">
-                          <div className="w-3 h-3 text-purple-600 group-hover:w-4 group-hover:h-4 transition-all duration-300">👁️</div>
+                          <Eye className="w-3 h-3 text-purple-600 group-hover:w-4 group-hover:h-4 transition-all duration-300" />
                         </div>
                       </button>
                     </div>
                   </div>
                 </div>
 
-                {/* AI Güçlendirmesi ve Action Buttons - Aşağıda */}
+                {/* AI Prompt ve Action Buttons - Aşağıda */}
                 <div className="grid grid-cols-2 gap-3 mt-3">
-                  {/* AI Güçlendirmesi */}
+                  {/* AI Prompt Girme Alanı */}
                   <div className="bg-black/30 rounded-lg border border-gray-600/50 overflow-hidden">
-                    <div className="p-3 h-full flex flex-col justify-center">
+                    <div className="p-3 h-full flex flex-col">
                       <div className="text-center mb-3">
-                        <h4 className="text-sm font-bold text-white mb-1">AI Güçlendirmesi</h4>
+                        <h4 className="text-sm font-bold text-white mb-1">🎨 AI Düzenleme</h4>
                         <p className="text-gray-300 text-xs">
-                          Tüm video ve görseller AI ile optimize edildi
+                          Videoları ve görselleri düzenlemek için prompt girin
                         </p>
                       </div>
                       
-                      <div className="grid grid-cols-2 gap-2">
-                        <div className="bg-black/40 rounded p-2 text-center">
-                          <div className="text-orange-400 text-sm mb-1">🎯</div>
-                          <p className="text-xs text-white">Kalite</p>
+                      <div className="flex-1 flex flex-col">
+                        {/* Medya Seçimi */}
+                        <div className="mb-3">
+                          <label className="block text-xs text-gray-300 mb-1">Düzenlenecek Medya:</label>
+                          <select
+                            value={selectedMedia}
+                            onChange={(e) => setSelectedMedia(e.target.value)}
+                            className="w-full bg-black/40 border border-gray-600/50 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/30"
+                          >
+                            <option value="video1">🎬 Video 1 (Ana Video)</option>
+                            <option value="video2">🎬 Video 2</option>
+                            <option value="görsel1">🖼️ Görsel 1</option>
+                            <option value="görsel2">📸 Görsel 2</option>
+                            <option value="görsel3">🎨 Görsel 3</option>
+                            <option value="görsel4">🖼️ Görsel 4</option>
+                            <option value="tümü">✨ Tüm Medya Dosyaları</option>
+                          </select>
                         </div>
-                        <div className="bg-black/40 rounded p-2 text-center">
-                          <div className="text-orange-400 text-sm mb-1">⚡</div>
-                          <p className="text-xs text-white">Hız</p>
-                        </div>
-                        <div className="bg-black/40 rounded p-2 text-center">
-                          <div className="text-orange-400 text-sm mb-1">🔊</div>
-                          <p className="text-xs text-white">Ses</p>
-                        </div>
-                        <div className="bg-black/40 rounded p-2 text-center">
-                          <div className="text-orange-400 text-sm mb-1">🎨</div>
-                          <p className="text-xs text-white">Görsel</p>
-                        </div>
+                        
+                        {/* Prompt Alanı */}
+                        <textarea
+                          value={prompt}
+                          onChange={(e) => setPrompt(e.target.value)}
+                          placeholder="Örn: Videoyu daha parlak yap, renkleri canlandır, ses seviyesini artır..."
+                          className="w-full h-16 bg-black/40 border border-gray-600/50 rounded-lg px-3 py-2 text-white text-sm placeholder-gray-400 resize-none focus:outline-none focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/30"
+                        />
+                        <Button
+                          onClick={handlePromptSubmit}
+                          disabled={!prompt.trim() || isProcessingPrompt}
+                          className="mt-2 w-full flex items-center justify-center gap-2 px-3 py-2 bg-gradient-to-r from-orange-600 to-red-600 text-white text-sm rounded-lg hover:from-orange-700 hover:to-red-700 transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {isProcessingPrompt ? (
+                            <>
+                              <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></div>
+                              İşleniyor...
+                            </>
+                          ) : (
+                            <>
+                              <span>✨</span>
+                              Düzenle
+                            </>
+                          )}
+                        </Button>
                       </div>
                     </div>
                   </div>

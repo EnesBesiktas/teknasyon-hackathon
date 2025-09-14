@@ -396,6 +396,9 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                         <div className="bg-black/60 rounded-lg p-4 border border-orange-500/30">
                           <p className="text-gray-100 leading-relaxed text-base">{campaign.adText}</p>
                         </div>
+                        <div className="mt-2 text-xs text-orange-200">
+                          Backend field: <code className="bg-black/40 px-1 rounded">campaigns[].campaign.adText</code>
+                        </div>
                       </div>
 
                       {/* Call to Action */}
@@ -423,6 +426,9 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                             </span>
                             <span className="text-gray-400 text-sm">Kullanıcı tıklayacağı buton metni</span>
                           </div>
+                          <div className="mt-2 text-xs text-green-200">
+                            Backend field: <code className="bg-black/40 px-1 rounded">campaigns[].campaign.call_to_action</code>
+                          </div>
                         </div>
                       )}
 
@@ -439,6 +445,9 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                             </div>
                           </div>
                           
+                          <div className="mb-3 text-xs text-purple-200">
+                            Backend field: <code className="bg-black/40 px-1 rounded">campaigns[].campaign.creative</code>
+                          </div>
                           
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {/* Creative Headline */}
