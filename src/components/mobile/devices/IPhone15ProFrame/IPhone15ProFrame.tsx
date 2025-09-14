@@ -54,7 +54,7 @@ export const IPhone15ProFrame: React.FC<IPhone15ProFrameProps> = ({
   return (
     <div className={`relative mx-auto ${className}`}>
       {/* iPhone 16 Pro Max Frame - Larger screen with proper proportions */}
-      <div className="relative w-80 max-w-[90vw] h-[700px] max-h-[90vh] bg-black rounded-[3.5rem] shadow-2xl border-4 border-gray-800 overflow-hidden">
+      <div className="relative w-[400px] max-w-[90vw] h-[875px] max-h-[110vh] bg-black rounded-[3.5rem] shadow-2xl border-4 border-gray-800 overflow-hidden">
         {/* Dynamic Island */}
         <DynamicIsland />
 

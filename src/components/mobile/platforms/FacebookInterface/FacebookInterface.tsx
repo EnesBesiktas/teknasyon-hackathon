@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, MessageSquare, ThumbsUp, MessageCircle, Share, Crown, CheckCircle, MoreHorizontal, Plus, Bell, Home, Play, Store, User, Menu } from 'lucide-react';
+import { Search, MessageSquare, ThumbsUp, MessageCircle, Share, CheckCircle, MoreHorizontal, Plus, Bell, Home, Play, Store, User, Menu } from 'lucide-react';
 import { EnhancedVideoPlayer } from '../../video/EnhancedVideoPlayer';
 import type { FacebookInterfaceProps, FacebookPost } from './types';
 
@@ -128,12 +128,6 @@ const FacebookPostComponent: React.FC<{
       {post.isAd && (
         <div className="absolute top-2 right-2 z-10">
           <div className={`bg-gradient-to-r ${getAdBadgeColor()} px-2 py-1 rounded-full shadow-lg`}>
-            <div className="flex items-center space-x-1">
-              <Crown className="h-3 w-3 text-white" />
-              <span className="text-white text-xs font-bold">
-                Royal Video{post.adType === 'german' ? ' (DE)' : ''}
-              </span>
-            </div>
           </div>
         </div>
       )}
@@ -149,7 +143,7 @@ const FacebookPostComponent: React.FC<{
 
       {/* Media */}
       {post.content.media && (
-        <div className="aspect-video bg-gray-900 relative">
+        <div className="aspect-video bg-black relative">
           {post.content.media.type === 'video' && post.content.media.videoData ? (
             <EnhancedVideoPlayer
               videoData={post.content.media.videoData}
@@ -166,6 +160,15 @@ const FacebookPostComponent: React.FC<{
               className="w-full h-full object-cover"
             />
           )}
+        </div>
+      )}
+
+      {/* Learn More Button for Ads */}
+      {post.isAd && (
+        <div className="px-3 py-2">
+          <button className="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded-lg transition-colors">
+            Learn more
+          </button>
         </div>
       )}
 
@@ -222,7 +225,7 @@ export const FacebookInterface: React.FC<FacebookInterfaceProps> = ({
   onShare,
 }) => {
   return (
-    <div className={`bg-gray-100 text-gray-800 h-full flex flex-col overflow-hidden ${className}`}>
+    <div className={`bg-white text-gray-800 h-full flex flex-col overflow-hidden ${className}`}>
       <div className="flex-shrink-0">
         <FacebookHeader />
       </div>

@@ -315,7 +315,7 @@ body.iron-bank-page .header .header-actions button:hover {
 }
 
 .iron-bank-page .bg-white.border-b.border-gray-200 {
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(20, 20, 20, 0.9) 100%) !important;
+  background: linear-gradient(135deg);
   border-bottom: 2px solid rgba(255, 140, 0, 0.3) !important;
   backdrop-filter: blur(10px) !important;
 }

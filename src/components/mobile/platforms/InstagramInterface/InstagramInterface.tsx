@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart, MessageCircle, Send, Bookmark, MoreHorizontal, Crown, CheckCircle } from 'lucide-react';
+import { Heart, MessageCircle, Send, Bookmark, MoreHorizontal, CheckCircle } from 'lucide-react';
 import { EnhancedVideoPlayer } from '../../video/EnhancedVideoPlayer';
 import type { InstagramInterfaceProps, InstagramPost } from './types';
 
@@ -104,12 +104,6 @@ const InstagramPost: React.FC<{
       {post.isAd && (
         <div className="absolute top-2 right-2 z-10">
           <div className={`bg-gradient-to-r ${getAdBadgeColor()} px-2 py-1 rounded-full`}>
-            <div className="flex items-center space-x-1">
-              <Crown className="h-3 w-3 text-white" />
-              <span className="text-white text-xs font-bold">
-                Royal Video{post.adType === 'german' ? ' (DE)' : ''}
-              </span>
-            </div>
           </div>
         </div>
       )}
@@ -135,6 +129,18 @@ const InstagramPost: React.FC<{
           />
         )}
       </div>
+
+      {/* Learn More Button for Ads */}
+      {post.isAd && (
+        <div className="px-4 py-2">
+          <div className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center justify-between">
+            <span className="text-sm font-medium">Learn more</span>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+        </div>
+      )}
 
       <PostActions
         post={post}
