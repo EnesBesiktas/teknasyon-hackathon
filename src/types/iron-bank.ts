@@ -34,17 +34,34 @@ export interface LocalizationProgress {
 
 export interface CampaignData {
   country: string;
+  countryName?: string;
   platform: 'facebook' | 'google' | 'tiktok';
   adText: string;
   targeting: {
     ageRange: string;
     interests: string[];
     demographics: string;
+    location?: string;
   };
   budget: {
     suggested: number;
     currency: string;
   };
+  callToAction?: string;
+  creative?: {
+    aspectRatio: string;
+    headline: string;
+    hashtags: string[];
+  };
+  policyNotes?: string[];
+  measurement?: {
+    utm: string;
+    experiments: string[];
+  };
+  variants?: Array<{
+    adText: string;
+    headline: string;
+  }>;
 }
 
 export type WorkflowStep = 'upload' | 'analysis' | 'localization' | 'marketing';
@@ -66,6 +83,6 @@ export const AVAILABLE_COUNTRIES: Country[] = [
   { code: 'DE', name: 'Germany', flag: '🇩🇪', language: 'German' },
   { code: 'ES', name: 'Spain', flag: '🇪🇸', language: 'Spanish' },
   { code: 'IT', name: 'Italy', flag: '🇮🇹', language: 'Italian' },
-  { code: 'BR', name: 'Brazil', flag: '🇧🇷', language: 'Portuguese' },
+  { code: 'KP', name: 'North Korea', flag: '🇰🇵', language: 'Korean' },
   { code: 'CN', name: 'China', flag: '🇨🇳', language: 'Chinese' },
 ];

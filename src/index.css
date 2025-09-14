@@ -334,3 +334,260 @@ body.iron-bank-page .header .header-actions button:hover {
   color: rgba(255, 140, 0, 1) !important;
   background: rgba(255, 140, 0, 0.1) !important;
 }
+
+/* Hide blue indicator for Iron Bank active state */
+.iron-bank-page .fixed.left-0.top-0.w-16 .nav-item.active .absolute.left-0 {
+  display: none !important;
+}
+
+.iron-bank-page .fixed.left-0.top-0.w-16 .nav-item.active .bg-blue-600 {
+  display: none !important;
+}
+
+/* Alternative selector for blue indicator */
+.iron-bank-page .fixed.left-0.top-0.w-16 .absolute.left-0 {
+  display: none !important;
+}
+
+.iron-bank-page .fixed.left-0.top-0.w-16 .bg-blue-600 {
+  display: none !important;
+}
+
+/* More specific selectors for blue indicator removal */
+.iron-bank-page .fixed.left-0.top-0.w-16 .absolute.left-0.top-1\/2 {
+  display: none !important;
+}
+
+.iron-bank-page .fixed.left-0.top-0.w-16 .transform.-translate-y-1\/2 {
+  display: none !important;
+}
+
+.iron-bank-page .fixed.left-0.top-0.w-16 .w-1.h-6 {
+  display: none !important;
+}
+
+.iron-bank-page .fixed.left-0.top-0.w-16 .rounded-r {
+  display: none !important;
+}
+
+/* Target the specific blue indicator div */
+.iron-bank-page .fixed.left-0.top-0.w-16 div.absolute.left-0.top-1\/2.transform.-translate-y-1\/2.w-1.h-6.bg-blue-600.rounded-r {
+  display: none !important;
+}
+
+/* Epic Workflow Animation Styles */
+@keyframes epic-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes epic-bounce {
+  0%, 20%, 53%, 80%, 100% {
+    transform: translate3d(0,0,0) scale(1);
+  }
+  40%, 43% {
+    transform: translate3d(0,-30px,0) scale(1.1);
+  }
+  70% {
+    transform: translate3d(0,-15px,0) scale(1.05);
+  }
+  90% {
+    transform: translate3d(0,-4px,0) scale(1.02);
+  }
+}
+
+@keyframes dragon-fire-particles {
+  0% {
+    opacity: 0;
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    opacity: 1;
+    transform: translateY(-20px) rotate(90deg);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(-40px) rotate(180deg);
+  }
+  75% {
+    opacity: 0.6;
+    transform: translateY(-60px) rotate(270deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-80px) rotate(360deg);
+  }
+}
+
+@keyframes epic-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(249, 115, 22, 0.4),
+                0 0 10px rgba(249, 115, 22, 0.3),
+                0 0 15px rgba(249, 115, 22, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 10px rgba(249, 115, 22, 0.6),
+                0 0 20px rgba(249, 115, 22, 0.4),
+                0 0 30px rgba(249, 115, 22, 0.3);
+  }
+}
+
+@keyframes epic-pulse-ring {
+  0% {
+    transform: scale(0.33);
+  }
+  40%, 50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes epic-float {
+  0%, 100% {
+    transform: translateY(0px);
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-20px);
+    opacity: 0.8;
+  }
+  75% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes epic-tilt {
+  0%, 50%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(1deg);
+  }
+  75% {
+    transform: rotate(-1deg);
+  }
+}
+
+@keyframes epic-shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes epic-dragon-roar {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 10px rgba(249, 115, 22, 0.5));
+  }
+  25% {
+    transform: scale(1.1) rotate(2deg);
+    filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.6));
+  }
+  50% {
+    transform: scale(1.2) rotate(-1deg);
+    filter: drop-shadow(0 0 20px rgba(234, 179, 8, 0.7));
+  }
+  75% {
+    transform: scale(1.15) rotate(1deg);
+    filter: drop-shadow(0 0 15px rgba(249, 115, 22, 0.6));
+  }
+}
+
+/* Epic Animation Classes */
+.animate-fade-in {
+  animation: epic-fade-in 0.8s ease-out forwards;
+}
+
+.animate-epic-bounce {
+  animation: epic-bounce 2s ease-in-out infinite;
+}
+
+.animate-dragon-particles {
+  animation: dragon-fire-particles 3s ease-in-out infinite;
+}
+
+.animate-epic-glow {
+  animation: epic-glow 2s ease-in-out infinite;
+}
+
+.animate-epic-pulse {
+  animation: epic-pulse-ring 1.5s ease-out infinite;
+}
+
+.animate-float {
+  animation: epic-float 3s ease-in-out infinite;
+}
+
+.animate-tilt {
+  animation: epic-tilt 10s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  background-size: 1000px 100%;
+  animation: epic-shimmer 2s infinite;
+}
+
+.animate-dragon-roar {
+  animation: epic-dragon-roar 4s ease-in-out infinite;
+}
+
+/* Epic Background Effects */
+.epic-backdrop {
+  backdrop-filter: blur(8px) brightness(0.7) contrast(1.2);
+  background: radial-gradient(ellipse at center,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(20, 20, 20, 0.85) 50%,
+    rgba(0, 0, 0, 0.95) 100%);
+}
+
+.epic-fire-border {
+  position: relative;
+}
+
+.epic-fire-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  padding: 2px;
+  background: linear-gradient(45deg, #ff6b35, #ff8c42, #ffa726, #ff6b35);
+  border-radius: inherit;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation: flameMove 3s linear infinite;
+}
+
+/* Epic Progress Bar Styles */
+.epic-progress-glow {
+  box-shadow: 0 0 10px rgba(249, 115, 22, 0.5),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.epic-progress-glow::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%);
+  animation: epic-shimmer 1.5s infinite;
+}

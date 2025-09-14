@@ -5,7 +5,8 @@ import {
   Settings, 
   FileText, 
   Target, 
-  CreditCard
+  CreditCard,
+  Globe2
 } from 'lucide-react';
 import { DragonIcon } from '../ui/DragonIcon';
 import { LogoIcon } from '../ui/LogoIcon';
@@ -29,6 +30,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ onNavigate, currentPath }) => 
       label: 'Dashboard',
       path: '/',
       isActive: currentPath === '/'
+    },
+    {
+      icon: <Globe2 className="w-5 h-5" />,
+      label: 'Localization',
+      path: '/localization-lab',
+      isActive: currentPath === '/localization-lab'
     },
     {
       icon: <Users className="w-5 h-5" />,

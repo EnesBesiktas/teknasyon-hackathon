@@ -1,16 +1,20 @@
 import type { IApiService, ILocalStorageService } from '../../types';
 
 export class ApiService implements IApiService {
-  private readonly baseURL: string;
+  public readonly baseURL: string;
 
   constructor(private localStorageService: ILocalStorageService) {
-    this.baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
+    // FastAPI backend default is http://localhost:8000
+    // Use VITE_API_BASE_URL if provided, otherwise fallback
+    this.baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
   }
 
-  private getHeaders(): Record<string, string> {
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-    };
+  public getHeaders(includeContentType: boolean = true): Record<string, string> {
+    const headers: Record<string, string> = {};
+
+    if (includeContentType) {
+      headers['Content-Type'] = 'application/json';
+    }
 
     const token = this.localStorageService.getItem<string>('auth_token');
     if (token) {
