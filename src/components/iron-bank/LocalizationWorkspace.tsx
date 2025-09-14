@@ -74,23 +74,13 @@ export const LocalizationWorkspace: React.FC<LocalizationWorkspaceProps> = ({
     try {
       console.log(`Starting FAST localization for ${country.name} (${country.code})`);
 
-      // Backend bağlantısı geçici olarak deaktif edildi - geliştirme için
-      // const result = await localizationApi.fastLocalize({
-      //   video_id: videoId,
-      //   country_code: country.code,
-      //   force_local_tts: false,
-      // });
+      const result = await localizationApi.fastLocalize({
+        video_id: videoId,
+        country_code: country.code,
+        force_local_tts: false,
+      });
 
-      // console.log(`FAST localization result for ${country.code}:`, result);
-
-      // Simulated result for development
-      const result = {
-        status: 'completed',
-        final_video_url: `https://example.com/localized_${country.code}.mp4`,
-        country_code: country.code
-      };
-
-      console.log(`Simulated localization result for ${country.code}:`, result);
+      console.log(`FAST localization result for ${country.code}:`, result);
 
       setLocalizationResults(prev => ({
         ...prev,
@@ -192,39 +182,20 @@ export const LocalizationWorkspace: React.FC<LocalizationWorkspaceProps> = ({
     setIsProcessing(true);
 
     try {
-      // Backend bağlantısı geçici olarak deaktif edildi - geliştirme için
       // Start real localization for each country that isn't already completed
-      // for (const country of targetCountries) {
-      //   // Check if this country is already completed
-      //   const dubbingStatus = localizationProgress.dubbing.find(d => d.language === country.language);
-      //   const translationStatus = localizationProgress.translation.find(t => t.language === country.language);
+      for (const country of targetCountries) {
+        // Check if this country is already completed
+        const dubbingStatus = localizationProgress.dubbing.find(d => d.language === country.language);
+        const translationStatus = localizationProgress.translation.find(t => t.language === country.language);
 
-      //   if (dubbingStatus?.status === 'completed' && translationStatus?.status === 'completed') {
-      //     console.log(`Skipping ${country.name} - already completed`);
-      //     continue;
-      //   }
+        if (dubbingStatus?.status === 'completed' && translationStatus?.status === 'completed') {
+          console.log(`Skipping ${country.name} - already completed`);
+          continue;
+        }
 
-      //   console.log(`Starting localization for ${country.name}...`);
-      //   await startLocalization(country);
-      // }
-
-      // Simulated processing for development
-      console.log('Starting simulated localization for all countries...');
-      
-      // Simulate processing delay
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Simulate results for all countries
-      const simulatedResults = {};
-      targetCountries.forEach(country => {
-        simulatedResults[country.code] = {
-          status: 'completed',
-          final_video_url: `https://example.com/localized_${country.code}.mp4`,
-          country_code: country.code
-        };
-      });
-      
-      setLocalizationResults(simulatedResults);
+        console.log(`Starting localization for ${country.name}...`);
+        await startLocalization(country);
+      }
 
       // Update adaptation status after all localizations
     const newProgress = { ...localizationProgress };

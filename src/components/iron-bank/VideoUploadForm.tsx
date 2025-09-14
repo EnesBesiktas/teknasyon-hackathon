@@ -59,35 +59,32 @@ export const VideoUploadForm: React.FC<VideoUploadFormProps> = ({
   const localizationApi = useRef(new LocalizationApi(storage));
 
   useEffect(() => {
-    // Backend bağlantısı geçici olarak deaktif edildi - geliştirme için
-    // const fetchCountries = async () => {
-    //   try {
-    //     const countries = await localizationApi.current.getCountries(false);
+    const fetchCountries = async () => {
+      try {
+        const countries = await localizationApi.current.getCountries(false);
 
-    //     // Map backend countries to frontend format, keeping original order but using backend data
-    //     const mappedCountries = AVAILABLE_COUNTRIES.map(frontendCountry => {
-    //       const backendCountry = countries.find(bc => bc.country_code === frontendCountry.code);
-    //       if (backendCountry) {
-    //         return {
-    //           ...frontendCountry,
-    //           name: backendCountry.country_name,
-    //           language: backendCountry.language_name,
-    //         };
-    //       }
-    //       return frontendCountry;
-    //     });
+        // Map backend countries to frontend format, keeping original order but using backend data
+        const mappedCountries = AVAILABLE_COUNTRIES.map(frontendCountry => {
+          const backendCountry = countries.find(bc => bc.country_code === frontendCountry.code);
+          if (backendCountry) {
+            return {
+              ...frontendCountry,
+              name: backendCountry.country_name,
+              language: backendCountry.language_name,
+            };
+          }
+          return frontendCountry;
+        });
 
-    //     setAvailableCountries(mappedCountries);
-    //   } catch (error) {
-    //     console.warn('Failed to fetch countries from backend, using fallback list');
-    //     // Keep using AVAILABLE_COUNTRIES as fallback
-    //   }
-    // };
+        setAvailableCountries(mappedCountries);
+      } catch (error) {
+        console.warn('Failed to fetch countries from backend, using fallback list');
+        // Keep using AVAILABLE_COUNTRIES as fallback
+        setAvailableCountries(AVAILABLE_COUNTRIES);
+      }
+    };
 
-    // fetchCountries();
-    
-    // Şimdilik sadece frontend verilerini kullan
-    setAvailableCountries(AVAILABLE_COUNTRIES);
+    fetchCountries();
   }, []); // ✅ Empty dependency array - runs only once on mount
 
   const handleFileSelect = (file: File) => {
