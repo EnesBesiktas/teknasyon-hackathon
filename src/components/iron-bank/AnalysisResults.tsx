@@ -105,7 +105,7 @@ export const AnalysisResults: React.FC<AnalysisResultsProps> = ({
           <div className="flex items-center justify-center gap-3 mb-4">
             <BarChart3 className="w-8 h-8 text-orange-400" />
             <h2 className="text-3xl font-bold text-white drop-shadow-lg">
-              ⚔️ Kültürel Uygunluk Raporu
+               Kültürel Uygunluk Raporu
             </h2>
           </div>
           <p className="text-orange-200 text-lg drop-shadow-lg">

@@ -334,3 +334,43 @@ body.iron-bank-page .header .header-actions button:hover {
   color: rgba(255, 140, 0, 1) !important;
   background: rgba(255, 140, 0, 0.1) !important;
 }
+
+/* Hide blue indicator for Iron Bank active state */
+.iron-bank-page .fixed.left-0.top-0.w-16 .nav-item.active .absolute.left-0 {
+  display: none !important;
+}
+
+.iron-bank-page .fixed.left-0.top-0.w-16 .nav-item.active .bg-blue-600 {
+  display: none !important;
+}
+
+/* Alternative selector for blue indicator */
+.iron-bank-page .fixed.left-0.top-0.w-16 .absolute.left-0 {
+  display: none !important;
+}
+
+.iron-bank-page .fixed.left-0.top-0.w-16 .bg-blue-600 {
+  display: none !important;
+}
+
+/* More specific selectors for blue indicator removal */
+.iron-bank-page .fixed.left-0.top-0.w-16 .absolute.left-0.top-1\/2 {
+  display: none !important;
+}
+
+.iron-bank-page .fixed.left-0.top-0.w-16 .transform.-translate-y-1\/2 {
+  display: none !important;
+}
+
+.iron-bank-page .fixed.left-0.top-0.w-16 .w-1.h-6 {
+  display: none !important;
+}
+
+.iron-bank-page .fixed.left-0.top-0.w-16 .rounded-r {
+  display: none !important;
+}
+
+/* Target the specific blue indicator div */
+.iron-bank-page .fixed.left-0.top-0.w-16 div.absolute.left-0.top-1\/2.transform.-translate-y-1\/2.w-1.h-6.bg-blue-600.rounded-r {
+  display: none !important;
+}

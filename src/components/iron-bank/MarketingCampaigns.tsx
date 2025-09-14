@@ -293,16 +293,16 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
         </div>
 
         {/* Summary Card */}
-        <div className="mt-8 bg-gradient-to-r from-purple-50 to-indigo-50 border border-purple-200 rounded-lg p-6">
+        <div className="mt-8 bg-black/60 backdrop-blur-sm border border-orange-500/50 rounded-lg p-6 hover-flames">
           <div className="text-center">
-            <h3 className="text-xl font-semibold text-purple-900 mb-2">
+            <h3 className="text-xl font-semibold text-white mb-2 drop-shadow-lg">
               🎉 Tebrikler! Iron Bank Süreci Tamamlandı
             </h3>
-            <p className="text-purple-700 mb-4">
+            <p className="text-orange-200 mb-4 drop-shadow-lg">
               {targetCountries.length} ülke için toplam {campaignData.length} kampanya hazırlandı.
               Artık reklamlarınızı tüm dünyaya yayabilirsiniz!
             </p>
-            <div className="flex items-center justify-center gap-6 text-sm text-purple-600">
+            <div className="flex items-center justify-center gap-6 text-sm text-orange-300">
               <div className="flex items-center gap-1">
                 <Clock className="w-4 h-4" />
                 <span>Süreç süresi: ~15 dk</span>

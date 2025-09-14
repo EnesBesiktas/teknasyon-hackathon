@@ -89,7 +89,7 @@ export const LocalizationWorkspace: React.FC<LocalizationWorkspaceProps> = ({
       }));
 
       // Update progress for this country
-      const newProgress = { ...localizationProgress };
+      const newProgress = { ...localizationProgress } as LocalizationProgress;
       if (newProgress && newProgress.dubbing) {
         const dubbingIndex = newProgress.dubbing.findIndex(d => d.language === country.language);
         if (dubbingIndex !== -1) {
@@ -112,7 +112,7 @@ export const LocalizationWorkspace: React.FC<LocalizationWorkspaceProps> = ({
         }
       }
 
-      if (newProgress) {
+      if (newProgress && newProgress.dubbing && newProgress.translation) {
         onUpdateProgress(newProgress);
       }
     } catch (error) {
@@ -199,10 +199,10 @@ export const LocalizationWorkspace: React.FC<LocalizationWorkspaceProps> = ({
       }
 
       // Update adaptation status after all localizations
-      const newProgress = { ...localizationProgress };
-      if (newProgress.adaptation.status === 'pending') {
-        newProgress.adaptation = {
-          ...newProgress.adaptation,
+    const newProgress = { ...localizationProgress };
+    if (newProgress.adaptation.status === 'pending') {
+      newProgress.adaptation = {
+        ...newProgress.adaptation,
           status: 'completed',
           progress: 100,
           changes: [
@@ -247,7 +247,7 @@ export const LocalizationWorkspace: React.FC<LocalizationWorkspaceProps> = ({
   }, [isAllCompleted, isProcessing]);
 
   if (!localizationProgress) {
-    return <div className="p-8 text-center">Yükleniyor...</div>;
+    return <div className="p-8 text-center text-orange-200 drop-shadow-lg">⚔️ Yükleniyor...</div>;
   }
 
   return (
@@ -256,12 +256,12 @@ export const LocalizationWorkspace: React.FC<LocalizationWorkspaceProps> = ({
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <Globe2 className="w-8 h-8 text-purple-600" />
-            <h2 className="text-3xl font-bold text-gray-900">
+            <Globe2 className="w-8 h-8 text-orange-400" />
+            <h2 className="text-3xl font-bold text-white drop-shadow-lg">
               Akıllı Yerelleştirme
             </h2>
           </div>
-          <p className="text-gray-600 text-lg">
+          <p className="text-orange-200 text-lg drop-shadow-lg">
             Videonuz seçili dillere çevriliyor ve yerel kültürlere uyarlanıyor
           </p>
         </div>
@@ -271,11 +271,11 @@ export const LocalizationWorkspace: React.FC<LocalizationWorkspaceProps> = ({
           <Button
             onClick={startAllProcessing}
             disabled={isProcessing || isAllCompleted}
-            className="px-8 py-4 bg-purple-600 text-white text-lg font-semibold rounded-lg hover:bg-purple-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors duration-200"
+            className="px-8 py-4 bg-gradient-to-r from-purple-600 to-orange-600 text-white text-lg font-semibold rounded-lg hover:from-purple-700 hover:to-orange-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-all duration-200 hover-flames"
           >
-            {isProcessing ? 'Yerelleştirme Devam Ediyor...' : isAllCompleted ? 'Yerelleştirme Tamamlandı' : 'Uyarlamayı Başlat'}
+            {isProcessing ? '⚔️ Yerelleştirme Devam Ediyor...' : isAllCompleted ? '✅ Yerelleştirme Tamamlandı' : '⚔️ Uyarlamayı Başlat'}
           </Button>
-          <p className="text-gray-600 mt-3">
+          <p className="text-orange-200 mt-3 drop-shadow-lg">
             {!isProcessing && !isAllCompleted && 'Tüm yerelleştirme işlemleri otomatik olarak başlatılacak'}
             {isProcessing && 'Dublaj, çeviri ve kültürel uyarlama işlemleri devam ediyor'}
             {isAllCompleted && 'Tüm yerelleştirme işlemleri başarıyla tamamlandı'}
@@ -304,7 +304,7 @@ export const LocalizationWorkspace: React.FC<LocalizationWorkspaceProps> = ({
                           <p className="font-medium text-sm text-white">{country.name}</p>
                           <p className="text-xs text-gray-300">{item.language}</p>
                         </div>
-                        {getStatusIcon(item.status)}
+                          {getStatusIcon(item.status)}
                       </div>
                       <div className="mb-2">
                         <div className="flex justify-between text-xs text-gray-300 mb-1">
@@ -330,7 +330,7 @@ export const LocalizationWorkspace: React.FC<LocalizationWorkspaceProps> = ({
                               >
                                 <Play className="w-3 h-3" />
                                 İzle
-                              </Button>
+                          </Button>
                               <Button
                                 onClick={() => {
                                   const link = document.createElement('a');
@@ -341,8 +341,8 @@ export const LocalizationWorkspace: React.FC<LocalizationWorkspaceProps> = ({
                                 className="flex items-center justify-center gap-1 px-2 py-1 bg-blue-600 text-white border border-blue-500 rounded text-xs hover:bg-blue-700"
                               >
                                 <Download className="w-3 h-3" />
-                                İndir
-                              </Button>
+                            İndir
+                          </Button>
                             </>
                           ) : (
                             <div className="text-xs text-gray-400">Video işleniyor...</div>
@@ -374,7 +374,7 @@ export const LocalizationWorkspace: React.FC<LocalizationWorkspaceProps> = ({
                           <p className="font-medium text-sm text-white">{country.name}</p>
                           <p className="text-xs text-gray-300">{item.language}</p>
                         </div>
-                        {getStatusIcon(item.status)}
+                          {getStatusIcon(item.status)}
                       </div>
                       <div className="mb-2">
                         <div className="flex justify-between text-xs text-gray-300 mb-1">
@@ -418,7 +418,7 @@ export const LocalizationWorkspace: React.FC<LocalizationWorkspaceProps> = ({
               <div className="p-4 max-h-96 overflow-y-auto">
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="text-sm font-semibold text-white">Otomatik Uyarlama</h4>
-                  {getStatusIcon(localizationProgress.adaptation.status)}
+                    {getStatusIcon(localizationProgress.adaptation.status)}
                 </div>
                 <div className="mb-4">
                   <div className="flex justify-between text-xs text-gray-300 mb-1">
@@ -455,8 +455,9 @@ export const LocalizationWorkspace: React.FC<LocalizationWorkspaceProps> = ({
 
         {/* Single Video Area - Compact */}
         {isAllCompleted && (
-          <div className="flex justify-center mb-6">
-            <div className="w-full max-w-2xl bg-black/60 backdrop-blur-sm rounded-lg border border-orange-500/50 p-4 hover-flames">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            {/* Sol: Yerelleştirilmiş Video */}
+            <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-orange-500/50 p-4 hover-flames">
               <div className="text-center mb-4">
                 <h3 className="text-lg font-bold text-white mb-1 drop-shadow-lg">
                   🎬 Yerelleştirilmiş Video
@@ -560,6 +561,191 @@ export const LocalizationWorkspace: React.FC<LocalizationWorkspaceProps> = ({
                         </Button>
                       </>
                     )}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Sağ: Güçlendirilmiş Video ve Görsel Alanı */}
+            <div className="bg-black/60 backdrop-blur-sm rounded-lg border border-orange-500/50 p-4 hover-flames">
+              <div className="text-center mb-4">
+                <h3 className="text-lg font-bold text-white mb-1 drop-shadow-lg">
+                  ⚔️ Güçlendirilmiş Medya
+            </h3>
+                <p className="text-orange-200 text-sm">
+                  AI destekli video ve görsel işleme
+                </p>
+              </div>
+              
+              {/* 2 Video + 4 Görsel Layout */}
+              <div className="space-y-3">
+                {/* Üst Satır - 2 Video */}
+                <div className="grid grid-cols-2 gap-3">
+                  {/* Video 1 */}
+                  <div className="bg-black/50 rounded-lg border border-gray-600/50 overflow-hidden group hover:scale-105 transition-transform duration-300">
+                    <div className="relative bg-black aspect-video">
+                      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-orange-600/80 to-red-600/80 group-hover:from-orange-500/90 group-hover:to-red-500/90 transition-all duration-300">
+                        <div className="text-center text-white group-hover:scale-110 transition-transform duration-300">
+                          <span className="text-2xl mb-2 block group-hover:text-3xl transition-all duration-300">⚔️</span>
+                          <p className="text-sm font-medium group-hover:text-base transition-all duration-300">Ana Video</p>
+                          <p className="text-xs opacity-80 group-hover:text-sm group-hover:opacity-100 transition-all duration-300">AI ile optimize edildi</p>
+                        </div>
+                      </div>
+                      <button className="absolute inset-0 flex items-center justify-center group hover-flames">
+                        <div className="w-10 h-10 bg-white/90 rounded-full flex items-center justify-center group-hover:bg-white group-hover:w-12 group-hover:h-12 transition-all duration-300 shadow-lg">
+                          <Play className="w-5 h-5 text-orange-600 ml-1 group-hover:w-6 group-hover:h-6 transition-all duration-300" />
+                        </div>
+                      </button>
+                      <div className="absolute top-2 right-2 group-hover:top-3 group-hover:right-3 transition-all duration-300">
+                        <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-2 py-1 rounded-full text-xs font-bold group-hover:px-3 group-hover:py-1.5 group-hover:text-sm transition-all duration-300">
+                          AI
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Video 2 */}
+                  <div className="bg-black/50 rounded-lg border border-gray-600/50 overflow-hidden group hover:scale-105 transition-transform duration-300">
+                    <div className="relative bg-black aspect-video">
+                      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-purple-600/80 to-orange-600/80 group-hover:from-purple-500/90 group-hover:to-orange-500/90 transition-all duration-300">
+                        <div className="text-center text-white group-hover:scale-110 transition-transform duration-300">
+                          <span className="text-2xl mb-2 block group-hover:text-3xl transition-all duration-300">🎬</span>
+                          <p className="text-sm font-medium group-hover:text-base transition-all duration-300">Video 2</p>
+                          <p className="text-xs opacity-80 group-hover:text-sm group-hover:opacity-100 transition-all duration-300">AI ile optimize edildi</p>
+                        </div>
+                      </div>
+                      <button className="absolute inset-0 flex items-center justify-center group hover-flames">
+                        <div className="w-10 h-10 bg-white/90 rounded-full flex items-center justify-center group-hover:bg-white group-hover:w-12 group-hover:h-12 transition-all duration-300 shadow-lg">
+                          <Play className="w-5 h-5 text-purple-600 ml-1 group-hover:w-6 group-hover:h-6 transition-all duration-300" />
+                        </div>
+                      </button>
+                      <div className="absolute top-2 right-2 group-hover:top-3 group-hover:right-3 transition-all duration-300">
+                        <div className="bg-gradient-to-r from-purple-500 to-orange-500 text-white px-2 py-1 rounded-full text-xs font-bold group-hover:px-3 group-hover:py-1.5 group-hover:text-sm transition-all duration-300">
+                          AI
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Alt Satır - 4 Görsel Koyma Alanı */}
+                <div className="grid grid-cols-4 gap-2">
+                  {/* Görsel 1 */}
+                  <div className="bg-black/50 rounded-lg border border-gray-600/50 overflow-hidden group hover:scale-110 transition-transform duration-300">
+                    <div className="relative bg-black aspect-square">
+                      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-green-600/80 to-blue-600/80 group-hover:from-green-500/90 group-hover:to-blue-500/90 transition-all duration-300">
+                        <div className="text-center text-white group-hover:scale-110 transition-transform duration-300">
+                          <span className="text-lg mb-1 block group-hover:text-xl transition-all duration-300">🖼️</span>
+                          <p className="text-xs font-medium group-hover:text-sm transition-all duration-300">Görsel 1</p>
+                        </div>
+                      </div>
+                      <button className="absolute inset-0 flex items-center justify-center group hover-flames">
+                        <div className="w-6 h-6 bg-white/90 rounded-full flex items-center justify-center group-hover:bg-white group-hover:w-8 group-hover:h-8 transition-all duration-300 shadow-lg">
+                          <div className="w-3 h-3 text-green-600 group-hover:w-4 group-hover:h-4 transition-all duration-300">👁️</div>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Görsel 2 */}
+                  <div className="bg-black/50 rounded-lg border border-gray-600/50 overflow-hidden group hover:scale-110 transition-transform duration-300">
+                    <div className="relative bg-black aspect-square">
+                      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-yellow-600/80 to-orange-600/80 group-hover:from-yellow-500/90 group-hover:to-orange-500/90 transition-all duration-300">
+                        <div className="text-center text-white group-hover:scale-110 transition-transform duration-300">
+                          <span className="text-lg mb-1 block group-hover:text-xl transition-all duration-300">📸</span>
+                          <p className="text-xs font-medium group-hover:text-sm transition-all duration-300">Görsel 2</p>
+                        </div>
+                      </div>
+                      <button className="absolute inset-0 flex items-center justify-center group hover-flames">
+                        <div className="w-6 h-6 bg-white/90 rounded-full flex items-center justify-center group-hover:bg-white group-hover:w-8 group-hover:h-8 transition-all duration-300 shadow-lg">
+                          <div className="w-3 h-3 text-yellow-600 group-hover:w-4 group-hover:h-4 transition-all duration-300">👁️</div>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Görsel 3 */}
+                  <div className="bg-black/50 rounded-lg border border-gray-600/50 overflow-hidden group hover:scale-110 transition-transform duration-300">
+                    <div className="relative bg-black aspect-square">
+                      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-red-600/80 to-pink-600/80 group-hover:from-red-500/90 group-hover:to-pink-500/90 transition-all duration-300">
+                        <div className="text-center text-white group-hover:scale-110 transition-transform duration-300">
+                          <span className="text-lg mb-1 block group-hover:text-xl transition-all duration-300">🎨</span>
+                          <p className="text-xs font-medium group-hover:text-sm transition-all duration-300">Görsel 3</p>
+                        </div>
+                      </div>
+                      <button className="absolute inset-0 flex items-center justify-center group hover-flames">
+                        <div className="w-6 h-6 bg-white/90 rounded-full flex items-center justify-center group-hover:bg-white group-hover:w-8 group-hover:h-8 transition-all duration-300 shadow-lg">
+                          <div className="w-3 h-3 text-red-600 group-hover:w-4 group-hover:h-4 transition-all duration-300">👁️</div>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Görsel 4 */}
+                  <div className="bg-black/50 rounded-lg border border-gray-600/50 overflow-hidden group hover:scale-110 transition-transform duration-300">
+                    <div className="relative bg-black aspect-square">
+                      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-purple-600/80 to-blue-600/80 group-hover:from-purple-500/90 group-hover:to-blue-500/90 transition-all duration-300">
+                        <div className="text-center text-white group-hover:scale-110 transition-transform duration-300">
+                          <span className="text-lg mb-1 block group-hover:text-xl transition-all duration-300">🖼️</span>
+                          <p className="text-xs font-medium group-hover:text-sm transition-all duration-300">Görsel 4</p>
+                        </div>
+                      </div>
+                      <button className="absolute inset-0 flex items-center justify-center group hover-flames">
+                        <div className="w-6 h-6 bg-white/90 rounded-full flex items-center justify-center group-hover:bg-white group-hover:w-8 group-hover:h-8 transition-all duration-300 shadow-lg">
+                          <div className="w-3 h-3 text-purple-600 group-hover:w-4 group-hover:h-4 transition-all duration-300">👁️</div>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* AI Güçlendirmesi ve Action Buttons - Aşağıda */}
+                <div className="grid grid-cols-2 gap-3 mt-3">
+                  {/* AI Güçlendirmesi */}
+                  <div className="bg-black/30 rounded-lg border border-gray-600/50 overflow-hidden">
+                    <div className="p-3 h-full flex flex-col justify-center">
+                      <div className="text-center mb-3">
+                        <h4 className="text-sm font-bold text-white mb-1">AI Güçlendirmesi</h4>
+                        <p className="text-gray-300 text-xs">
+                          Tüm video ve görseller AI ile optimize edildi
+                        </p>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-2">
+                        <div className="bg-black/40 rounded p-2 text-center">
+                          <div className="text-orange-400 text-sm mb-1">🎯</div>
+                          <p className="text-xs text-white">Kalite</p>
+                        </div>
+                        <div className="bg-black/40 rounded p-2 text-center">
+                          <div className="text-orange-400 text-sm mb-1">⚡</div>
+                          <p className="text-xs text-white">Hız</p>
+                        </div>
+                        <div className="bg-black/40 rounded p-2 text-center">
+                          <div className="text-orange-400 text-sm mb-1">🔊</div>
+                          <p className="text-xs text-white">Ses</p>
+                        </div>
+                        <div className="bg-black/40 rounded p-2 text-center">
+                          <div className="text-orange-400 text-sm mb-1">🎨</div>
+                          <p className="text-xs text-white">Görsel</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="bg-black/30 rounded-lg border border-gray-600/50 overflow-hidden">
+                    <div className="p-3 h-full flex flex-col justify-center">
+                      <div className="space-y-3">
+                        <Button className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-gradient-to-r from-orange-600 to-red-600 text-white text-sm rounded-lg hover:from-orange-700 hover:to-red-700 transition-colors shadow-lg">
+                          <Play className="w-4 h-4" />
+                          Tümünü İzle
+                        </Button>
+                        <Button className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-gradient-to-r from-purple-600 to-orange-600 text-white text-sm rounded-lg hover:from-purple-700 hover:to-orange-700 transition-colors shadow-lg">
+                          <Download className="w-4 h-4" />
+                          Tümünü İndir
+                        </Button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

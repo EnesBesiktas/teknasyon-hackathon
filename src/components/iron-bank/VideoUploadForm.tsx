@@ -174,7 +174,7 @@ export const VideoUploadForm: React.FC<VideoUploadFormProps> = ({
                 {/* Epic Success Message */}
                 <div className="text-center">
                   <p className="text-xl font-bold text-orange-400 drop-shadow-lg mb-2">
-                    🐉 VIDEO HAZIR! 🐉
+                     VIDEO HAZIR! 
                   </p>
                   <p className="text-white font-semibold drop-shadow-lg">
                     <strong>{selectedFile.name}</strong>
@@ -375,7 +375,7 @@ export const VideoUploadForm: React.FC<VideoUploadFormProps> = ({
                 Fethediliyor...
               </div>
             ) : (
-              'Fethet'
+              'Fethet⚔️'
             )}
           </Button>
 
