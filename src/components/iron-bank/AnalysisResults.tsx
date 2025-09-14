@@ -325,6 +325,77 @@ export const AnalysisResults: React.FC<AnalysisResultsProps> = ({
                     </h3>
                   </div>
 
+                  {/* Scores Section */}
+                  {analysis.scores && (
+                    <div className="mb-6 p-4 bg-gray-900/50 border border-gray-500/30 rounded-lg">
+                      <div className="flex items-center gap-2 mb-4">
+                        <PieChart className="w-5 h-5 text-gray-400" />
+                        <h4 className="font-semibold text-white">Performans Skorları</h4>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {/* Cultural Fit Score */}
+                        <div className="text-center">
+                          <div className={`text-2xl font-bold mb-1 ${
+                            analysis.scores.cultural_fit_percent >= 80 ? 'text-green-400' :
+                            analysis.scores.cultural_fit_percent >= 60 ? 'text-yellow-400' : 'text-red-400'
+                          }`}>
+                            {analysis.scores.cultural_fit_percent}%
+                          </div>
+                          <div className="text-sm text-gray-300">Kültürel Uyum</div>
+                          <div className="w-full bg-gray-700 rounded-full h-2 mt-2">
+                            <div
+                              className={`h-2 rounded-full transition-all duration-300 ${
+                                analysis.scores.cultural_fit_percent >= 80 ? 'bg-green-500' :
+                                analysis.scores.cultural_fit_percent >= 60 ? 'bg-yellow-500' : 'bg-red-500'
+                              }`}
+                              style={{ width: `${analysis.scores.cultural_fit_percent}%` }}
+                            />
+                          </div>
+                        </div>
+
+                        {/* Content Suitability Score */}
+                        <div className="text-center">
+                          <div className={`text-2xl font-bold mb-1 ${
+                            analysis.scores.content_suitability_percent >= 80 ? 'text-green-400' :
+                            analysis.scores.content_suitability_percent >= 60 ? 'text-yellow-400' : 'text-red-400'
+                          }`}>
+                            {analysis.scores.content_suitability_percent}%
+                          </div>
+                          <div className="text-sm text-gray-300">İçerik Uygunluğu</div>
+                          <div className="w-full bg-gray-700 rounded-full h-2 mt-2">
+                            <div
+                              className={`h-2 rounded-full transition-all duration-300 ${
+                                analysis.scores.content_suitability_percent >= 80 ? 'bg-green-500' :
+                                analysis.scores.content_suitability_percent >= 60 ? 'bg-yellow-500' : 'bg-red-500'
+                              }`}
+                              style={{ width: `${analysis.scores.content_suitability_percent}%` }}
+                            />
+                          </div>
+                        </div>
+
+                        {/* Market Potential Score */}
+                        <div className="text-center">
+                          <div className={`text-2xl font-bold mb-1 ${
+                            analysis.scores.market_potential_percent >= 80 ? 'text-green-400' :
+                            analysis.scores.market_potential_percent >= 60 ? 'text-yellow-400' : 'text-red-400'
+                          }`}>
+                            {analysis.scores.market_potential_percent}%
+                          </div>
+                          <div className="text-sm text-gray-300">Pazar Potansiyeli</div>
+                          <div className="w-full bg-gray-700 rounded-full h-2 mt-2">
+                            <div
+                              className={`h-2 rounded-full transition-all duration-300 ${
+                                analysis.scores.market_potential_percent >= 80 ? 'bg-green-500' :
+                                analysis.scores.market_potential_percent >= 60 ? 'bg-yellow-500' : 'bg-red-500'
+                              }`}
+                              style={{ width: `${analysis.scores.market_potential_percent}%` }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     {/* Strengths */}
                     {analysis.strengths && analysis.strengths.length > 0 && (

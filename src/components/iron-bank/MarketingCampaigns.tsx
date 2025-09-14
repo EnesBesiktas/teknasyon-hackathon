@@ -337,12 +337,12 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                             <span className="font-bold text-white text-xl capitalize">
                               {campaign.platform === 'google' ? 'Google Ads' : campaign.platform}
                             </span>
-                            <p className="text-orange-300 text-sm">Backend Response Data Structure</p>
+                            <p className="text-orange-300 text-sm">Kampanya İçeriği</p>
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
                           <span className="px-3 py-1 bg-blue-600/20 text-blue-300 rounded-full text-sm">
-                            Full Campaign Object
+                            Detaylı Kampanya
                           </span>
                         </div>
                       </div>
@@ -351,24 +351,24 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                       <div className="bg-gray-800/50 border border-gray-600/50 rounded-lg p-4 mb-4">
                         <h5 className="font-medium text-gray-300 mb-2 flex items-center gap-2">
                           <BarChart3 className="w-4 h-4" />
-                          Backend Response Structure for this Campaign
+                          Kampanya İçerik Özeti
                         </h5>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
                           <div className="bg-black/40 rounded p-2 text-center">
-                            <div className="text-orange-300 font-semibold">campaign.adText</div>
-                            <div className="text-gray-400">Ana metin</div>
+                            <div className="text-orange-300 font-semibold">Ana Reklam Metni</div>
+                            <div className="text-gray-400">Asıl kampanya içeriği</div>
                           </div>
                           <div className="bg-black/40 rounded p-2 text-center">
-                            <div className="text-green-300 font-semibold">campaign.call_to_action</div>
+                            <div className="text-green-300 font-semibold">Eylem Çağrısı</div>
                             <div className="text-gray-400">CTA butonu</div>
                           </div>
                           <div className="bg-black/40 rounded p-2 text-center">
-                            <div className="text-purple-300 font-semibold">campaign.creative</div>
-                            <div className="text-gray-400">Tasarım obj.</div>
+                            <div className="text-purple-300 font-semibold">Kreatif Detaylar</div>
+                            <div className="text-gray-400">Tasarım ve format</div>
                           </div>
                           <div className="bg-black/40 rounded p-2 text-center">
-                            <div className="text-cyan-300 font-semibold">variants[]</div>
-                            <div className="text-gray-400">Alt. versiyonlar</div>
+                            <div className="text-cyan-300 font-semibold">Alternatif Versiyonlar</div>
+                            <div className="text-gray-400">A/B test varyantları</div>
                           </div>
                         </div>
                       </div>
@@ -381,7 +381,7 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                         <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center gap-2">
                             <Megaphone className="w-5 h-5 text-orange-400" />
-                            <h4 className="font-semibold text-white text-lg">campaign.adText</h4>
+                            <h4 className="font-semibold text-white text-lg">📝 Ana Reklam Metni</h4>
                           </div>
                           <div className="flex items-center gap-2">
                             <code className="text-xs bg-orange-600/20 text-orange-300 px-2 py-1 rounded">string</code>
@@ -407,7 +407,7 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                           <div className="flex items-center justify-between mb-3">
                             <div className="flex items-center gap-2">
                               <ExternalLink className="w-5 h-5 text-green-400" />
-                              <h4 className="font-semibold text-white text-lg">campaign.call_to_action</h4>
+                              <h4 className="font-semibold text-white text-lg">🎯 Eylem Çağrısı</h4>
                             </div>
                             <div className="flex items-center gap-2">
                               <code className="text-xs bg-green-600/20 text-green-300 px-2 py-1 rounded">string</code>
@@ -438,7 +438,7 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                           <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center gap-2">
                               <Lightbulb className="w-5 h-5 text-purple-400" />
-                              <h4 className="font-semibold text-white text-lg">campaign.creative</h4>
+                              <h4 className="font-semibold text-white text-lg">🎨 Kreatif Detaylar</h4>
                             </div>
                             <div className="flex items-center gap-2">
                               <code className="text-xs bg-purple-600/20 text-purple-300 px-2 py-1 rounded">object</code>
@@ -455,7 +455,7 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                               <div className="flex items-center justify-between mb-2">
                                 <h5 className="font-medium text-purple-300 flex items-center gap-2">
                                   <Hash className="w-4 h-4" />
-                                  creative.headline
+                                  Ana Başlık
                                 </h5>
                                 <code className="text-xs bg-purple-600/20 text-purple-300 px-2 py-1 rounded">string</code>
                               </div>
@@ -468,7 +468,7 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                               <div className="flex items-center justify-between mb-2">
                                 <h5 className="font-medium text-purple-300 flex items-center gap-2">
                                   <Target className="w-4 h-4" />
-                                  creative.aspect_ratio
+                                  Video Formatı
                                 </h5>
                                 <code className="text-xs bg-purple-600/20 text-purple-300 px-2 py-1 rounded">string</code>
                               </div>
@@ -491,7 +491,7 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                             <div className="flex items-center justify-between mb-3">
                               <h5 className="font-medium text-purple-300 flex items-center gap-2">
                                 <Hash className="w-4 h-4" />
-                                creative.hashtags
+                                Hashtag'ler
                               </h5>
                               <code className="text-xs bg-purple-600/20 text-purple-300 px-2 py-1 rounded">array[{campaign.creative.hashtags.length}]</code>
                             </div>
@@ -640,7 +640,7 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                         <div className="flex items-center justify-between mb-4">
                           <div className="flex items-center gap-2">
                             <Shuffle className="w-5 h-5 text-cyan-400" />
-                            <h4 className="font-semibold text-white text-lg">variants[]</h4>
+                            <h4 className="font-semibold text-white text-lg">🔄 Alternatif Kampanya Versiyonları</h4>
                           </div>
                           <div className="flex items-center gap-2">
                             <code className="text-xs bg-cyan-600/20 text-cyan-300 px-2 py-1 rounded">array[{campaign.variants.length}]</code>
@@ -651,7 +651,7 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                         </div>
                         
                         <div className="mb-3 text-xs text-cyan-200">
-                          Backend field: <code className="bg-black/40 px-1 rounded">campaigns[].variants</code>
+                          A/B Test için hazırlanmış alternatif kampanya metinleri
                         </div>
                         
                         <div className="mb-3">
@@ -685,7 +685,7 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                                 <div className="flex items-center justify-between mb-1">
                                   <h6 className="text-cyan-200 font-medium flex items-center gap-2">
                                     <Hash className="w-4 h-4" />
-                                    variants[{i}].headline
+                                    Alternatif Başlık
                                   </h6>
                                   <code className="text-xs bg-cyan-600/20 text-cyan-300 px-2 py-1 rounded">string</code>
                                 </div>
@@ -699,7 +699,7 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                                 <div className="flex items-center justify-between mb-1">
                                   <h6 className="text-cyan-200 font-medium flex items-center gap-2">
                                     <Megaphone className="w-4 h-4" />
-                                    variants[{i}].adText
+                                    Alternatif Reklam Metni
                                   </h6>
                                   <code className="text-xs bg-cyan-600/20 text-cyan-300 px-2 py-1 rounded">string</code>
                                 </div>
@@ -746,7 +746,7 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                         <div className="flex items-center justify-between mb-4">
                           <div className="flex items-center gap-2">
                             <AlertCircle className="w-5 h-5 text-yellow-400" />
-                            <h4 className="font-semibold text-white text-lg">campaign.policy_notes</h4>
+                            <h4 className="font-semibold text-white text-lg">⚠️ Platform Kuralları & Uyarılar</h4>
                           </div>
                           <div className="flex items-center gap-2">
                             <code className="text-xs bg-yellow-600/20 text-yellow-300 px-2 py-1 rounded">array[{campaign.policyNotes.length}]</code>
@@ -757,7 +757,7 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                         </div>
                         
                         <div className="mb-3 text-xs text-yellow-200">
-                          Backend field: <code className="bg-black/40 px-1 rounded">campaigns[].campaign.policy_notes</code>
+                          Reklam platformunun kurallarına uygunluk için dikkat edilecek noktalar
                         </div>
                         
                         <div className="mb-3">
@@ -778,7 +778,7 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                                 </div>
                                 <div className="flex-1">
                                   <div className="mb-1">
-                                    <code className="text-xs bg-yellow-600/20 text-yellow-300 px-2 py-1 rounded">policy_notes[{i}]</code>
+                                    <span className="text-xs bg-yellow-600/20 text-yellow-300 px-2 py-1 rounded">Kural #{i + 1}</span>
                                   </div>
                                   <p className="text-yellow-100 leading-relaxed">{note}</p>
                                   <div className="mt-2 flex items-center gap-4 text-xs">
@@ -813,7 +813,7 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                         <div className="flex items-center justify-between mb-4">
                           <div className="flex items-center gap-2">
                             <BarChart3 className="w-5 h-5 text-indigo-400" />
-                            <h4 className="font-semibold text-white text-lg">campaign.measurement</h4>
+                            <h4 className="font-semibold text-white text-lg">📊 Performans İzleme & Analitik</h4>
                           </div>
                           <div className="flex items-center gap-2">
                             <code className="text-xs bg-indigo-600/20 text-indigo-300 px-2 py-1 rounded">object</code>
@@ -824,7 +824,7 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                         </div>
                         
                         <div className="mb-3 text-xs text-indigo-200">
-                          Backend field: <code className="bg-black/40 px-1 rounded">campaigns[].campaign.measurement</code>
+                          Kampanya performansını ölçmek için gerekli izleme kodları ve deneyim önerileri
                         </div>
 
                         {/* UTM Tracking */}
@@ -832,7 +832,7 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                           <div className="flex items-center justify-between mb-2">
                             <h5 className="font-medium text-indigo-300 flex items-center gap-2">
                               <ExternalLink className="w-4 h-4" />
-                              measurement.utm
+                              İzleme Kodu (UTM)
                             </h5>
                             <code className="text-xs bg-indigo-600/20 text-indigo-300 px-2 py-1 rounded">string</code>
                           </div>
@@ -876,7 +876,7 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                           <div className="flex items-center justify-between mb-3">
                             <h5 className="font-medium text-indigo-300 flex items-center gap-2">
                               <Shuffle className="w-4 h-4" />
-                              measurement.experiments
+                              A/B Test Önerileri
                             </h5>
                             <code className="text-xs bg-indigo-600/20 text-indigo-300 px-2 py-1 rounded">array[{campaign.measurement.experiments.length}]</code>
                           </div>
@@ -889,7 +889,7 @@ export const MarketingCampaigns: React.FC<MarketingCampaignsProps> = ({
                                   </div>
                                   <div className="flex-1">
                                     <div className="mb-1">
-                                      <code className="text-xs bg-indigo-600/20 text-indigo-300 px-2 py-1 rounded">experiments[{i}]</code>
+                                      <span className="text-xs bg-indigo-600/20 text-indigo-300 px-2 py-1 rounded">Test #{i + 1}</span>
                                     </div>
                                     <p className="text-indigo-100 text-sm leading-relaxed">{exp}</p>
                                     <div className="mt-2 flex items-center gap-4 text-xs">

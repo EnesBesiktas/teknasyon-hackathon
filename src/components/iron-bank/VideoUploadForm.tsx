@@ -33,7 +33,7 @@ const EPIC_WORKFLOW_STEPS: EpicStep[] = [
   { id: 2, title: "Yola Çıkılıyor", icon: "🐉", description: "Ateş ve kan yolculuğu başlıyor..." },
   { id: 3, title: "Hedef Tespit Edildi", icon: "🏰", description: "Düşman kalesi görünümde..." },
   { id: 4, title: "Saldırı Başlıyor", icon: "⚔️", description: "Ejder ateşi yağıyor..." },
-  { id: 5, title: "Fethedildi!", icon: "🔥", description: "Zafer bizimdir! Dracarys!" }
+  { id: 5, title: "Fethedildi!", icon: "🔥", description: "Zafer, zafer benimdir diyebilenindir!"}
 ];
 
 export const VideoUploadForm: React.FC<VideoUploadFormProps> = ({
