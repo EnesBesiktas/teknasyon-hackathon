@@ -525,7 +525,7 @@ export const VideoUploadForm: React.FC<VideoUploadFormProps> = ({
               hover-flames px-8 py-4 text-lg font-bold rounded-lg transition-all duration-200 relative overflow-hidden
               ${!selectedFile || selectedCountries.length === 0 || isLoading || isEpicAnimationActive
                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'bg-gradient-to-r from-purple-600 to-purple-700 text-white hover:from-purple-700 hover:to-purple-800 shadow-lg hover:shadow-xl transform hover:scale-105 border border-orange-500/50 hover:border-orange-400/70'
+                : 'bg-gradient-to-r from-orange-600 to-red-600 text-white hover:from-orange-700 hover:to-red-700 shadow-lg hover:shadow-xl transform hover:scale-105 border border-orange-500/50 hover:border-orange-400/70'
               }
             `}
             style={{
@@ -557,7 +557,7 @@ export const VideoUploadForm: React.FC<VideoUploadFormProps> = ({
             {!isEpicAnimationActive && !isLoading && selectedFile && selectedCountries.length > 0 && (
               <>
                 <div className="absolute inset-0 bg-gradient-to-r from-orange-500/30 to-red-500/30 rounded-lg animate-pulse"></div>
-                <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-purple-700 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+                <div className="absolute -inset-1 bg-gradient-to-r from-orange-600 to-red-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
                 <div className="absolute inset-0 bg-gradient-to-r from-orange-600/10 to-red-600/10 rounded-lg animate-pulse"></div>
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-60 animate-pulse"></div>
                 <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-red-500 to-transparent opacity-60 animate-pulse"></div>
