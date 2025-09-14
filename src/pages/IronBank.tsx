@@ -201,6 +201,7 @@ export const IronBank: React.FC = () => {
             targetCountries={state.targetCountries}
             campaignData={state.campaignData}
             onUpdateCampaigns={(campaigns) => updateState({ campaignData: campaigns })}
+            videoId={uploadedVideoId || undefined}
           />
         );
       default:

@@ -308,7 +308,7 @@ export const AnalysisResults: React.FC<AnalysisResultsProps> = ({
         {showDetailedView && detailedAnalysis.length > 0 && (
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-white text-center mb-6 drop-shadow-lg">
-              🌍 Detaylı Kültürel Analiz Raporu
+              Detaylı Kültürel Analiz Raporu
             </h2>
 
             {detailedAnalysis.map((analysis) => {

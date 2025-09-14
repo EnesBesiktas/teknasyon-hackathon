@@ -26,15 +26,14 @@ type EpicStep = {
   title: string;
   icon: string;
   description: string;
-  duration: number;
 };
 
 const EPIC_WORKFLOW_STEPS: EpicStep[] = [
-  { id: 1, title: "Sefere Hazırlanılıyor", icon: "⚔️", description: "Ejderler uyanıyor...", duration: 2000 },
-  { id: 2, title: "Yola Çıkılıyor", icon: "🐉", description: "Ateş ve kan yolculuğu başlıyor...", duration: 2500 },
-  { id: 3, title: "Hedef Tespit Edildi", icon: "🏰", description: "Düşman kalesi görünümde...", duration: 2000 },
-  { id: 4, title: "Saldırı Başlıyor", icon: "⚔️", description: "Ejder ateşi yağıyor...", duration: 3000 },
-  { id: 5, title: "Fethedildi!", icon: "🔥", description: "Zafer bizimdir! Dracarys!", duration: 2000 }
+  { id: 1, title: "Sefere Hazırlanılıyor", icon: "⚔️", description: "Ejderler uyanıyor..." },
+  { id: 2, title: "Yola Çıkılıyor", icon: "🐉", description: "Ateş ve kan yolculuğu başlıyor..." },
+  { id: 3, title: "Hedef Tespit Edildi", icon: "🏰", description: "Düşman kalesi görünümde..." },
+  { id: 4, title: "Saldırı Başlıyor", icon: "⚔️", description: "Ejder ateşi yağıyor..." },
+  { id: 5, title: "Fethedildi!", icon: "🔥", description: "Zafer bizimdir! Dracarys!" }
 ];
 
 export const VideoUploadForm: React.FC<VideoUploadFormProps> = ({
@@ -54,6 +53,7 @@ export const VideoUploadForm: React.FC<VideoUploadFormProps> = ({
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const epicTimeoutRef = useRef<number | null>(null);
+  const epicIntervalRef = useRef<number | null>(null);
 
   const storage = useLocalStorage();
   const localizationApi = useRef(new LocalizationApi(storage));
@@ -135,54 +135,26 @@ export const VideoUploadForm: React.FC<VideoUploadFormProps> = ({
     });
   };
 
-  const startEpicWorkflow = async () => {
+  const startEpicWorkflow = () => {
     if (!selectedFile || selectedCountries.length === 0) return;
 
     setIsEpicAnimationActive(true);
     setCurrentEpicStep(0);
     setEpicProgress(0);
 
-    // Execute each epic step
-    for (let i = 0; i < EPIC_WORKFLOW_STEPS.length; i++) {
-      setCurrentEpicStep(i);
+    // Başlat: Upload + Analiz
+    onUpload(selectedFile, selectedCountries);
 
-      // Animate progress bar for current step
-      const stepDuration = EPIC_WORKFLOW_STEPS[i].duration;
-      const progressInterval = 50; // Update every 50ms
-      const progressIncrement = 100 / (stepDuration / progressInterval);
-
-      let currentProgress = 0;
-      const progressTimer = setInterval(() => {
-        currentProgress += progressIncrement;
-        if (currentProgress >= 100) {
-          currentProgress = 100;
-          clearInterval(progressTimer);
-        }
-        setEpicProgress(currentProgress);
-      }, progressInterval);
-
-      // Wait for step duration
-      await new Promise(resolve => {
-        epicTimeoutRef.current = setTimeout(resolve, stepDuration);
+    // Sürekli artan ilerleme (95%'e kadar). API tamamlanınca 100'e tamamlanır.
+    if (epicIntervalRef.current) window.clearInterval(epicIntervalRef.current);
+    epicIntervalRef.current = window.setInterval(() => {
+      setEpicProgress((prev) => {
+        const next = Math.min(prev + 0.8, 95);
+        const idx = Math.min(EPIC_WORKFLOW_STEPS.length - 1, Math.floor((next / 100) * EPIC_WORKFLOW_STEPS.length));
+        setCurrentEpicStep(idx);
+        return next;
       });
-
-      clearInterval(progressTimer);
-      setEpicProgress(100);
-
-      // Small delay between steps
-      if (i < EPIC_WORKFLOW_STEPS.length - 1) {
-        await new Promise(resolve => setTimeout(resolve, 300));
-        setEpicProgress(0);
-      }
-    }
-
-    // Epic animation complete - start actual upload process
-    setTimeout(() => {
-      setIsEpicAnimationActive(false);
-      setCurrentEpicStep(0);
-      setEpicProgress(0);
-      onUpload(selectedFile, selectedCountries);
-    }, 1000);
+    }, 200) as unknown as number;
   };
 
   const handleSubmit = () => {
@@ -191,12 +163,35 @@ export const VideoUploadForm: React.FC<VideoUploadFormProps> = ({
     }
   };
 
-  // Cleanup timeout on unmount
+  // API tamamlandığında animasyonu bitir
+  useEffect(() => {
+    if (!isEpicAnimationActive) return;
+    if (!isLoading) {
+      if (epicIntervalRef.current) { window.clearInterval(epicIntervalRef.current); epicIntervalRef.current = null; }
+      const finisher = window.setInterval(() => {
+        setEpicProgress((prev) => {
+          const next = Math.min(prev + 5, 100);
+          const idx = Math.min(EPIC_WORKFLOW_STEPS.length - 1, Math.floor((next / 100) * EPIC_WORKFLOW_STEPS.length));
+          setCurrentEpicStep(idx);
+          if (next >= 100) {
+            window.clearInterval(finisher);
+            setTimeout(() => {
+              setIsEpicAnimationActive(false);
+              setCurrentEpicStep(0);
+              setEpicProgress(0);
+            }, 600);
+          }
+          return next;
+        });
+      }, 80) as unknown as number;
+    }
+  }, [isLoading, isEpicAnimationActive]);
+
+  // Cleanup timers on unmount
   useEffect(() => {
     return () => {
-      if (epicTimeoutRef.current) {
-        clearTimeout(epicTimeoutRef.current);
-      }
+      if (epicTimeoutRef.current) clearTimeout(epicTimeoutRef.current);
+      if (epicIntervalRef.current) window.clearInterval(epicIntervalRef.current);
     };
   }, []);
 

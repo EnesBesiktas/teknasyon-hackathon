@@ -181,7 +181,7 @@ export const WorkflowStepper: React.FC<WorkflowStepperProps> = ({
       {/* Dragon Fire Progress Bar */}
       <div className="mt-6">
         <div className="flex items-center justify-between text-sm text-orange-200 mb-2 font-semibold drop-shadow-lg">
-          <span>🐉 İlerleme</span>
+          <span>İlerleme</span>
           <span>{Math.round(((currentStepIndex + 1) / STEPS.length) * 100)}%</span>
         </div>
         <div className="w-full bg-gradient-to-r from-gray-800 to-slate-800 rounded-full h-3 shadow-inner">

@@ -34,17 +34,34 @@ export interface LocalizationProgress {
 
 export interface CampaignData {
   country: string;
+  countryName?: string;
   platform: 'facebook' | 'google' | 'tiktok';
   adText: string;
   targeting: {
     ageRange: string;
     interests: string[];
     demographics: string;
+    location?: string;
   };
   budget: {
     suggested: number;
     currency: string;
   };
+  callToAction?: string;
+  creative?: {
+    aspectRatio: string;
+    headline: string;
+    hashtags: string[];
+  };
+  policyNotes?: string[];
+  measurement?: {
+    utm: string;
+    experiments: string[];
+  };
+  variants?: Array<{
+    adText: string;
+    headline: string;
+  }>;
 }
 
 export type WorkflowStep = 'upload' | 'analysis' | 'localization' | 'marketing';
