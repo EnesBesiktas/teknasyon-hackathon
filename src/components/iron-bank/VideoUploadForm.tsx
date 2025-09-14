@@ -1,9 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import type { DragEvent } from 'react';
 import { Upload, Film, AlertCircle, Globe } from 'lucide-react';
 import type { Country } from '../../types/iron-bank';
 import { AVAILABLE_COUNTRIES } from '../../types/iron-bank';
 import { Button } from '../ui/Button';
+import { LocalizationApi } from '../../services/api/localization';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 import starkLogo from '../../assets/stark1.png';
 import arrynLogo from '../../assets/arryn1.jpg';
 import hoaraLogo from '../../assets/house-hoara.jpg';
@@ -26,7 +28,39 @@ export const VideoUploadForm: React.FC<VideoUploadFormProps> = ({
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedCountries, setSelectedCountries] = useState<Country[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
+  const [availableCountries, setAvailableCountries] = useState<Country[]>(AVAILABLE_COUNTRIES);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const storage = useLocalStorage();
+  const localizationApi = useRef(new LocalizationApi(storage));
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const countries = await localizationApi.current.getCountries(false);
+
+        // Map backend countries to frontend format, keeping original order but using backend data
+        const mappedCountries = AVAILABLE_COUNTRIES.map(frontendCountry => {
+          const backendCountry = countries.find(bc => bc.country_code === frontendCountry.code);
+          if (backendCountry) {
+            return {
+              ...frontendCountry,
+              name: backendCountry.country_name,
+              language: backendCountry.language_name,
+            };
+          }
+          return frontendCountry;
+        });
+
+        setAvailableCountries(mappedCountries);
+      } catch (error) {
+        console.warn('Failed to fetch countries from backend, using fallback list');
+        // Keep using AVAILABLE_COUNTRIES as fallback
+      }
+    };
+
+    fetchCountries();
+  }, []); // ✅ Empty dependency array - runs only once on mount
 
   const handleFileSelect = (file: File) => {
     if (file.type.startsWith('video/')) {
@@ -69,7 +103,9 @@ export const VideoUploadForm: React.FC<VideoUploadFormProps> = ({
       if (isSelected) {
         return prev.filter(c => c.code !== country.code);
       } else {
-        return [...prev, country];
+        // SINGLE COUNTRY SELECTION: Replace any existing selection
+        // This ensures only one country is selected at a time
+        return [country];
       }
     });
   };
@@ -192,12 +228,12 @@ export const VideoUploadForm: React.FC<VideoUploadFormProps> = ({
               Hedef Ülkeler
             </h3>
             <span className="text-sm text-orange-200 drop-shadow-lg">
-              ({selectedCountries.length} seçildi)
+              ({selectedCountries.length > 0 ? `${selectedCountries[0].name} seçildi` : 'Ülke seçin'})
             </span>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3">
-            {AVAILABLE_COUNTRIES.map((country) => {
+            {availableCountries.map((country) => {
               const isSelected = selectedCountries.some(c => c.code === country.code);
               const isTurkey = country.code === 'TR';
               const isUS = country.code === 'US';
@@ -291,10 +327,21 @@ export const VideoUploadForm: React.FC<VideoUploadFormProps> = ({
           </div>
 
           {selectedCountries.length === 0 && (
-            <p className="text-orange-300 text-sm mt-3 flex items-center gap-2 drop-shadow-lg">
-              <AlertCircle className="w-4 h-4" />
-              En az bir hedef ülke seçmelisiniz
-            </p>
+            <div className="mt-3 p-3 bg-orange-900/30 border border-orange-500/50 rounded-lg">
+              <p className="text-orange-300 text-sm flex items-center gap-2 drop-shadow-lg">
+                <AlertCircle className="w-4 h-4" />
+                <strong>Tek ülke seçimi:</strong> Daha hızlı ve güvenilir işlem için sadece bir hedef ülke seçin
+              </p>
+            </div>
+          )}
+
+          {selectedCountries.length === 1 && (
+            <div className="mt-3 p-3 bg-green-900/30 border border-green-500/50 rounded-lg">
+              <p className="text-green-200 text-sm flex items-center gap-2 drop-shadow-lg">
+                <AlertCircle className="w-4 h-4" />
+                <strong>Seçilen ülke:</strong> {selectedCountries[0].name} ({selectedCountries[0].language}) - Doğrudan yerelleştirme hazır
+              </p>
+            </div>
           )}
         </div>
 
@@ -334,7 +381,7 @@ export const VideoUploadForm: React.FC<VideoUploadFormProps> = ({
 
           {selectedFile && selectedCountries.length > 0 && (
             <p className="text-orange-200 text-sm mt-4 drop-shadow-lg">
-              Video {selectedCountries.length} ülke için analiz edilecek
+              Video {selectedCountries[0].name} için yerelleştirilecek
             </p>
           )}
         </div>

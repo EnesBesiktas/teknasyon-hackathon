@@ -5,6 +5,7 @@ import { Dashboard } from './pages/Dashboard';
 import { AdsAccount } from './pages/AdsAccount';
 import { CreateRules } from './pages/CreateRules';
 import { IronBank } from './pages/IronBank';
+import { LocalizationLab } from './pages/LocalizationLab';
 
 function App() {
   const navigate = useNavigate();
@@ -28,6 +29,8 @@ function App() {
         return 'Billing';
       case '/iron-bank':
         return 'Iron Bank';
+      case '/localization-lab':
+        return 'Localization Lab';
       case '/settings':
         return 'Settings';
       default:
@@ -49,6 +52,7 @@ function App() {
         <Route path="/reports" element={<div className="p-6">Reports Page - Coming Soon</div>} />
         <Route path="/billing" element={<div className="p-6">Billing Page - Coming Soon</div>} />
         <Route path="/iron-bank" element={<IronBank />} />
+        <Route path="/localization-lab" element={<LocalizationLab />} />
         <Route path="/settings" element={<div className="p-6">Settings Page - Coming Soon</div>} />
       </Routes>
     </DashboardLayout>

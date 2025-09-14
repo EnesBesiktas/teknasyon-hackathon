@@ -1,21 +1,79 @@
-import React from 'react';
-import { BarChart3, TrendingUp, AlertTriangle, Users, CheckCircle, ArrowRight, Globe } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { BarChart3, TrendingUp, AlertTriangle, Users, CheckCircle, ArrowRight, Globe, Target, MessageCircle, Shield, PieChart, Eye, EyeOff } from 'lucide-react';
 import type { AnalysisResult, Country } from '../../types/iron-bank';
 import { Button } from '../ui/Button';
+import { LocalizationApi } from '../../services/api/localization';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 interface AnalysisResultsProps {
   analysisData: AnalysisResult | null;
   targetCountries: Country[];
   onContinue: () => void;
   isLoading: boolean;
+  videoId?: number;
+}
+
+interface DetailedCulturalAnalysis {
+  country_code: string;
+  strengths?: string[];
+  risks?: string[];
+  adaptations?: string[];
+  messaging?: {
+    cta_examples: string[];
+  };
+  compliance?: string[];
+  kpi_hypotheses?: string[];
+  scores?: {
+    cultural_fit_percent: number;
+    content_suitability_percent: number;
+    market_potential_percent: number;
+  };
+  target_audience?: {
+    demographics: string[];
+    interests: string[];
+    channels: string[];
+    messaging_tone: string;
+    price_sensitivity: string;
+  };
+  error?: string;
 }
 
 export const AnalysisResults: React.FC<AnalysisResultsProps> = ({
   analysisData,
   targetCountries,
   onContinue,
-  isLoading
+  isLoading,
+  videoId
 }) => {
+  const [detailedAnalysis, setDetailedAnalysis] = useState<DetailedCulturalAnalysis[]>([]);
+  const [isLoadingDetails, setIsLoadingDetails] = useState(false);
+  const [showDetailedView, setShowDetailedView] = useState(false);
+  const storage = useLocalStorage();
+  const localizationApi = new LocalizationApi(storage);
+
+  // Load detailed cultural analysis
+  useEffect(() => {
+    if (videoId && targetCountries.length > 0 && !isLoadingDetails && detailedAnalysis.length === 0) {
+      loadDetailedAnalysis();
+    }
+  }, [videoId, targetCountries]);
+
+  const loadDetailedAnalysis = async () => {
+    if (!videoId) return;
+
+    setIsLoadingDetails(true);
+    try {
+      const response = await localizationApi.analyzeCulture({
+        video_id: videoId,
+        country_codes: targetCountries.map(c => c.code)
+      });
+      setDetailedAnalysis(response.results);
+    } catch (error) {
+      console.error('Failed to load detailed cultural analysis:', error);
+    } finally {
+      setIsLoadingDetails(false);
+    }
+  };
   if (isLoading || !analysisData) {
     return (
       <div className="p-8">
@@ -195,6 +253,190 @@ export const AnalysisResults: React.FC<AnalysisResultsProps> = ({
             </ul>
           </div>
         </div>
+
+        {/* Toggle Detailed Analysis */}
+        <div className="text-center mb-8">
+          <Button
+            onClick={() => setShowDetailedView(!showDetailedView)}
+            disabled={isLoadingDetails}
+            className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 disabled:bg-gray-400 transition-all duration-200 flex items-center gap-2 mx-auto"
+          >
+            {showDetailedView ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+            {isLoadingDetails ? 'Detaylar Yükleniyor...' :
+             showDetailedView ? 'Detaylı Analizi Gizle' : 'Detaylı Kültürel Analizi Görüntüle'}
+          </Button>
+        </div>
+
+        {/* Detailed Cultural Analysis */}
+        {showDetailedView && detailedAnalysis.length > 0 && (
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold text-white text-center mb-6 drop-shadow-lg">
+              🌍 Detaylı Kültürel Analiz Raporu
+            </h2>
+
+            {detailedAnalysis.map((analysis) => {
+              const country = targetCountries.find(c => c.code === analysis.country_code);
+              if (!country || analysis.error) return null;
+
+              return (
+                <div key={analysis.country_code} className="mb-8 p-6 bg-black/60 backdrop-blur-sm rounded-lg border border-blue-500/50 hover-flames">
+                  {/* Country Header */}
+                  <div className="flex items-center gap-3 mb-6">
+                    <span className="text-3xl">{country.flag}</span>
+                    <h3 className="text-xl font-bold text-white drop-shadow-lg">
+                      {country.name} Pazarı İçin Detaylı Analiz
+                    </h3>
+                  </div>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {/* Strengths */}
+                    {analysis.strengths && analysis.strengths.length > 0 && (
+                      <div className="p-4 bg-green-900/20 border border-green-500/30 rounded-lg">
+                        <div className="flex items-center gap-2 mb-3">
+                          <CheckCircle className="w-5 h-5 text-green-400" />
+                          <h4 className="font-semibold text-white">Güçlü Yönler</h4>
+                        </div>
+                        <ul className="space-y-2">
+                          {analysis.strengths.map((strength, idx) => (
+                            <li key={idx} className="flex items-start gap-2 text-sm text-green-200">
+                              <span className="text-green-400 mt-1">•</span>
+                              {strength}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Risks */}
+                    {analysis.risks && analysis.risks.length > 0 && (
+                      <div className="p-4 bg-amber-900/20 border border-amber-500/30 rounded-lg">
+                        <div className="flex items-center gap-2 mb-3">
+                          <AlertTriangle className="w-5 h-5 text-amber-400" />
+                          <h4 className="font-semibold text-white">Riskler & Dikkat Edilecekler</h4>
+                        </div>
+                        <ul className="space-y-2">
+                          {analysis.risks.map((risk, idx) => (
+                            <li key={idx} className="flex items-start gap-2 text-sm text-amber-200">
+                              <span className="text-amber-400 mt-1">•</span>
+                              {risk}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Adaptations */}
+                    {analysis.adaptations && analysis.adaptations.length > 0 && (
+                      <div className="p-4 bg-purple-900/20 border border-purple-500/30 rounded-lg">
+                        <div className="flex items-center gap-2 mb-3">
+                          <Target className="w-5 h-5 text-purple-400" />
+                          <h4 className="font-semibold text-white">Önerilen Uyarlamalar</h4>
+                        </div>
+                        <ul className="space-y-2">
+                          {analysis.adaptations.map((adaptation, idx) => (
+                            <li key={idx} className="flex items-start gap-2 text-sm text-purple-200">
+                              <span className="text-purple-400 mt-1">•</span>
+                              {adaptation}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Messaging & CTA Examples */}
+                    {analysis.messaging?.cta_examples && analysis.messaging.cta_examples.length > 0 && (
+                      <div className="p-4 bg-blue-900/20 border border-blue-500/30 rounded-lg">
+                        <div className="flex items-center gap-2 mb-3">
+                          <MessageCircle className="w-5 h-5 text-blue-400" />
+                          <h4 className="font-semibold text-white">CTA Örnekleri</h4>
+                        </div>
+                        <div className="space-y-2">
+                          {analysis.messaging.cta_examples.map((cta, idx) => (
+                            <div key={idx} className="p-2 bg-blue-800/30 rounded text-sm text-blue-100 font-medium">
+                              "{cta}"
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Target Audience */}
+                  {analysis.target_audience && (
+                    <div className="mt-6 p-4 bg-indigo-900/20 border border-indigo-500/30 rounded-lg">
+                      <div className="flex items-center gap-2 mb-3">
+                        <Users className="w-5 h-5 text-indigo-400" />
+                        <h4 className="font-semibold text-white">Hedef Kitle Analizi</h4>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        {analysis.target_audience.demographics && analysis.target_audience.demographics.length > 0 && (
+                          <div>
+                            <span className="text-indigo-300 font-medium">Demografik:</span>
+                            <div className="text-indigo-200">{analysis.target_audience.demographics.join(', ')}</div>
+                          </div>
+                        )}
+                        {analysis.target_audience.interests && analysis.target_audience.interests.length > 0 && (
+                          <div>
+                            <span className="text-indigo-300 font-medium">İlgi Alanları:</span>
+                            <div className="text-indigo-200">{analysis.target_audience.interests.join(', ')}</div>
+                          </div>
+                        )}
+                        {analysis.target_audience.channels && analysis.target_audience.channels.length > 0 && (
+                          <div>
+                            <span className="text-indigo-300 font-medium">Kanallar:</span>
+                            <div className="text-indigo-200">{analysis.target_audience.channels.join(', ')}</div>
+                          </div>
+                        )}
+                        {analysis.target_audience.messaging_tone && (
+                          <div>
+                            <span className="text-indigo-300 font-medium">Mesaj Tonu:</span>
+                            <div className="text-indigo-200">{analysis.target_audience.messaging_tone}</div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* KPI Hypotheses */}
+                  {analysis.kpi_hypotheses && analysis.kpi_hypotheses.length > 0 && (
+                    <div className="mt-6 p-4 bg-teal-900/20 border border-teal-500/30 rounded-lg">
+                      <div className="flex items-center gap-2 mb-3">
+                        <PieChart className="w-5 h-5 text-teal-400" />
+                        <h4 className="font-semibold text-white">KPI Öngörüleri</h4>
+                      </div>
+                      <ul className="space-y-2">
+                        {analysis.kpi_hypotheses.map((kpi, idx) => (
+                          <li key={idx} className="flex items-start gap-2 text-sm text-teal-200">
+                            <span className="text-teal-400 mt-1">•</span>
+                            {kpi}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Compliance */}
+                  {analysis.compliance && analysis.compliance.length > 0 && (
+                    <div className="mt-6 p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
+                      <div className="flex items-center gap-2 mb-3">
+                        <Shield className="w-5 h-5 text-red-400" />
+                        <h4 className="font-semibold text-white">Uyumluluk & Güvenlik</h4>
+                      </div>
+                      <ul className="space-y-2">
+                        {analysis.compliance.map((item, idx) => (
+                          <li key={idx} className="flex items-start gap-2 text-sm text-red-200">
+                            <span className="text-red-400 mt-1">•</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
 
         {/* Action Buttons */}
         <div className="text-center">
