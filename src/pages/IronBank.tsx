@@ -87,10 +87,10 @@ export const IronBank: React.FC = () => {
 
       const analysisResponse = await localizationApi.analyzeCulture({
         video_id: videoId,
-        country_code: firstCountry.code
+        country_codes: [firstCountry.code]
       });
 
-      // Step 5: Transform backend analysis to frontend format
+      // Adım 5: Backend analizini frontend formatına dönüştür
       const analysis = analysisResponse.results[0];
       const transformedAnalysis = {
         culturalScore: analysis?.scores?.cultural_fit_percent || 85,
